@@ -3,6 +3,14 @@
 
 #include <string>
 #include <vector>
+#include <iostream>
+
+#define KEYWORD_FUNCTION "ფუნქცია"
+#define KEYWORD_PRINT "ბეჭდვა"
+#define KEYWORD_RETURN "დააბრუნე"
+#define KEYWORD_IF "თუ"
+#define KEYWORD_WHILE "სანამ"
+#define KEYWORD_MAIN "მთავარი"
 
 enum class TokenType 
 {
@@ -14,8 +22,17 @@ enum class TokenType
     DIV,
     LPAREN,
     RPAREN,
-    END_OF_FILE,
-    UNKNOWN
+    EQUALS,
+    LESS_THAN,
+    GREATER_THAN,
+    IF,
+    WHILE,
+    FUNCTION,
+    RETURN,
+    PRINT,
+    EOF_TOKEN,
+    UNKNOWN,
+    MAIN
 };
 
 struct Token 
@@ -24,18 +41,19 @@ struct Token
     std::string value;
 };
 
-class Lexer 
+class Lexer
 {
     public:
-        Lexer(const std::string& source);
+        Lexer(std::string& source);
         std::vector<Token> tokenize();
+        void print_all_tokens(std::vector<Token>& tokens);
 
     private:
         std::string sourceCode;
-        size_t currentPosition;
+        size_t iter;
         char currentChar();
 
-        void advance();
+
         Token makeToken(TokenType type, const std::string& value = "");
         Token tokenizeIdentifier();
         Token tokenizeNumber();

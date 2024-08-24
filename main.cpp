@@ -24,26 +24,26 @@ int main(int ac, char** av)
     }
 
     std::string sourceCode((std::istreambuf_iterator<char>(sourceFile)), std::istreambuf_iterator<char>());
+
     int i = 0;
-    // printing source code
-    
-    while (sourceCode[i] != '\0') 
+
+    // print source code
+
+    while(sourceCode[i] != '\0')
     {
         std::cout << sourceCode[i];
         i++;
     }
-    std::cout << std::endl;
     
+    // Lexer lexer(sourceCode);
+    // auto tokens = lexer.tokenize();
+    // lexer.print_all_tokens(tokens);
 
-    Lexer lexer(sourceCode);
-    auto tokens = lexer.tokenize();
-    
+    // Parser parser(tokens);
+    // auto ast = parser.parse();
 
-    Parser parser(tokens);
-    auto ast = parser.parse();
-
-    Compiler compiler;
-    compiler.compile(ast);
+    // Compiler compiler;
+    // compiler.compile(ast);
 
     return 0;
 }

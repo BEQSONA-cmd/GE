@@ -14,7 +14,7 @@ struct ASTNode {
 
 class Parser {
 public:
-    Parser(const std::vector<Token>& tokens);
+    Parser(std::vector<Token>& tokens);
     ASTNode* parse();
 
 private:

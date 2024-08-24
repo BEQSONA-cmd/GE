@@ -1,12 +1,12 @@
 #include "../Includes/Parser.h"
 
-Parser::Parser(const std::vector<Token>& tokens) : tokens(tokens), currentPosition(0) {}
+Parser::Parser(std::vector<Token>& tokens) : tokens(tokens), currentPosition(0) {}
 
 Token Parser::currentToken() 
 {
     if (currentPosition < tokens.size())
         return tokens[currentPosition];
-    return { TokenType::END_OF_FILE, "" };
+    return { TokenType::EOF_TOKEN, "" };
 }
 
 void Parser::advance() 
