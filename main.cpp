@@ -1,10 +1,8 @@
 #include <iostream>
 #include <fstream>
-#include <stdio.h>
 #include <string>
 #include "Includes/Lexer.h"
 #include "Includes/Parser.h"
-#include "Includes/Compiler.h"
 
 int main(int ac, char** av) 
 {
@@ -24,26 +22,16 @@ int main(int ac, char** av)
     }
 
     std::string sourceCode((std::istreambuf_iterator<char>(sourceFile)), std::istreambuf_iterator<char>());
-
-    int i = 0;
-
-    // print source code
-
-    while(sourceCode[i] != '\0')
-    {
-        std::cout << sourceCode[i];
-        i++;
-    }
     
-    // Lexer lexer(sourceCode);
-    // auto tokens = lexer.tokenize();
+    Lexer lexer(sourceCode);
+    auto tokens = lexer.tokenize();
     // lexer.print_all_tokens(tokens);
 
-    // Parser parser(tokens);
-    // auto ast = parser.parse();
+    Parser parser(tokens);
+    auto ast = parser.parse();
+    parser.print_ast(ast);
 
-    // Compiler compiler;
-    // compiler.compile(ast);
+    delete ast;
 
     return 0;
 }

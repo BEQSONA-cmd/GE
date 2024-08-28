@@ -2,7 +2,8 @@ NAME = ge_compiler
 CC = c++ -std=c++17
 FLAGS = -Wall -Werror -Wextra 
 
-SRC = main.cpp Parser/Lexer.cpp Parser/Parser.cpp Parser/Compiler.cpp
+SRC = main.cpp Parser/Lexer.cpp Parser/Parser.cpp
+
 OBJ = $(SRC:.cpp=.o)
 
 all: $(NAME)
