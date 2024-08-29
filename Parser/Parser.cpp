@@ -6,14 +6,6 @@ Parser::Parser(std::vector<Token>& tokens)
     iter = 0;
 }
 
-Token Parser::makeToken(TokenType type, const std::string& value) 
-{
-    Token token;
-    token.type = type;
-    token.value = value;
-    return token;
-}
-
 Token Parser::currentToken() 
 {
     if (iter >= tokens.size()) 
@@ -28,63 +20,86 @@ ASTNode* Parser::makeNode(Token token)
 
 ASTNode* Parser::parse() 
 {
-    return parseExpression();
-}
-
-
-ASTNode* Parser::parseExpression() 
-{
-    Token token = currentToken();
-    if (token.type == TokenType::PRINT) 
-    {
-        iter++;
-        return parsePrintStatement();
-    } 
-    else if (token.type == TokenType::STRING) 
-    {
-        iter++;
-        return parseString();
-    } 
-    else if (token.type == TokenType::IDENTIFIER) 
-    {
-        iter++;
-        return parseIdentifier();
-    } 
-    else 
-    {
-        std::cerr << "Error: Unexpected token " << token.value << std::endl;
-        return NULL;
-    }
+    return parsePrintStatement();
 }
 
 ASTNode* Parser::parsePrintStatement() 
 {
-    ASTNode* node = makeNode(currentToken());
+    Token token = currentToken();
+    if (token.type != TokenType::PRINT) 
+    {
+        std::cerr << "Error: Expected print statement" << std::endl;
+        return NULL;
+    }
+
     iter++;
+    ASTNode* node = makeNode(token);
     node->left = parseExpression();
     return node;
 }
 
-ASTNode* Parser::parseString() 
+ASTNode* Parser::parseExpression() 
 {
-    ASTNode* node = makeNode(currentToken());
-    iter++;
-    return node;
+    Token token = currentToken();
+    if (token.type == TokenType::STRING) 
+    {
+        iter++;
+        return makeNode(token);
+    } 
+    else if (token.type == TokenType::IDENTIFIER) 
+    {
+        iter++;
+        return makeNode(token);
+    } 
+    else if (token.type == TokenType::LEFT_PAREN) 
+    {
+        iter++;
+        ASTNode* node = makeNode(token);
+        node->left = parseExpression();
+        token = currentToken();
+        if (token.type != TokenType::RIGHT_PAREN) 
+        {
+            std::cerr << "Error: Expected right parenthesis" << std::endl;
+            return NULL;
+        }
+        iter++;
+        return node;
+    } 
+    else 
+    {
+        std::cerr << "Error: Expected string, identifier or left parenthesis" << std::endl;
+        return NULL;
+    }
 }
 
-ASTNode* Parser::parseIdentifier() 
+Token Parser::makeToken(TokenType type, const std::string& value) 
 {
-    ASTNode* node = makeNode(currentToken());
-    iter++;
-    return node;
+    Token token;
+    token.type = type;
+    token.value = value;
+    return token;
 }
+
+
 
 void Parser::print_ast(ASTNode* node) 
 {
     if (node == NULL) 
         return;
-    
-    std::cout << node->token.value << std::endl;
-    print_ast(node->left);
+
+    if (node->token.type == TokenType::PRINT)
+    {
+        std::cout << "function print (";
+        std::cout << node->token.value;
+        std::cout << ") " << std::endl;
+    } 
+    else if (node->token.type == TokenType::STRING) 
+        std::cout << "output (" << node->token.value << ")" << std::endl;
+    else if (node->token.type == TokenType::IDENTIFIER) 
+    {
+        std::cout << node->token.value << std::endl;
+    }
+
     print_ast(node->right);
+    print_ast(node->left);
 }
