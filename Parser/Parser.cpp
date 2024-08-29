@@ -65,11 +65,7 @@ ASTNode* Parser::parseExpression()
         iter++;
         return node;
     } 
-    else 
-    {
-        std::cerr << "Error: Expected string, identifier or left parenthesis" << std::endl;
-        return NULL;
-    }
+    return NULL;
 }
 
 Token Parser::makeToken(TokenType type, const std::string& value) 
@@ -79,8 +75,6 @@ Token Parser::makeToken(TokenType type, const std::string& value)
     token.value = value;
     return token;
 }
-
-
 
 void Parser::print_ast(ASTNode* node) 
 {
@@ -92,12 +86,27 @@ void Parser::print_ast(ASTNode* node)
         std::cout << "function print (";
         std::cout << node->token.value;
         std::cout << ") " << std::endl;
-    } 
-    else if (node->token.type == TokenType::STRING) 
-        std::cout << "output (" << node->token.value << ")" << std::endl;
+        // if token is print it should have a left child
+        
+        // this will be '(' 
+        node = node->left;
+        
+        // this will be the string
+        node = node->left;
+        std::cout << "output string (";
+        std::cout << node->token.value;
+        std::cout << ") " << std::endl;
+    }
     else if (node->token.type == TokenType::IDENTIFIER) 
     {
-        std::cout << node->token.value << std::endl;
+        std::cout << "identifier (";
+        std::cout << node->token.value;
+        std::cout << ")" << std::endl;
+
+        node = node->left;
+        std::cout << "value (";
+        std::cout << node->token.value;
+        std::cout << ") " << std::endl;
     }
 
     print_ast(node->right);
