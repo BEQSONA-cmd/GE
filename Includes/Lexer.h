@@ -6,6 +6,8 @@
 #include <iostream>
 
 #define KEYWORD_PRINT "ბეჭდვა"
+#define KEYWORD_PHRASE "ფრაზა"
+#define KEYWORD_NUMBER "რიცხვი"
 
 // რიცხვი ი = 15
 
@@ -21,14 +23,12 @@
 // QUOTE : " , '
 // EQUAL : =
 // EOF_TOKEN : \0
-// 
-
-
-
+// VALUE : 15 , გამარჯობა სამყარო 1
 
 enum class TokenType 
 {
     NUMBER,
+    VALUE,
     PHRASE,
     IDENTIFIER,
     PRINT,
