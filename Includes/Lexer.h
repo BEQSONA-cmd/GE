@@ -7,14 +7,36 @@
 
 #define KEYWORD_PRINT "ბეჭდვა"
 
+// რიცხვი ი = 15
+
+// ფრაზა გამარჯობა = "გამარჯობა სამყარო 1"
+
+// ბეჭდვა("გამარჯობა სამყარო 2\n")
+
+// IDENTIFIER : ი , გამარჯობა
+// PRINT : ბეჭდვა
+// STRING : გამარჯობა სამყარო 1, გამარჯობა სამყარო 2\n
+// LEFT_PAREN : (
+// RIGHT_PAREN : )
+// QUOTE : " , '
+// EQUAL : =
+// EOF_TOKEN : \0
+// 
+
+
+
+
 enum class TokenType 
 {
+    NUMBER,
+    PHRASE,
     IDENTIFIER,
     PRINT,
     STRING,
     LEFT_PAREN,
     RIGHT_PAREN,
     QUOTE,
+    EQUAL,
     EOF_TOKEN,
     UNKNOWN,
 };

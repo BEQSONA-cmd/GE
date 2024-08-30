@@ -25,13 +25,13 @@ int main(int ac, char** av)
     
     Lexer lexer(sourceCode);
     auto tokens = lexer.tokenize();
-    // lexer.print_all_tokens(tokens);
+    lexer.print_all_tokens(tokens);
 
-    Parser parser(tokens);
-    auto ast = parser.parse();
-    parser.print_ast(ast);
+    // Parser parser(tokens);
+    // auto ast = parser.parse();
+    // parser.print_ast(ast);
 
-    delete ast;
+    // delete ast;
 
     return 0;
 }

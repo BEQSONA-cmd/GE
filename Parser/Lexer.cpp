@@ -27,7 +27,6 @@ std::vector<Token> Lexer::tokenize()
     
     while (currentChar() != '\0') 
     {
-        
         if (currentChar() == '(') 
         {
             tokens.push_back(makeToken(TokenType::LEFT_PAREN, "("));
