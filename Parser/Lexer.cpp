@@ -37,7 +37,6 @@ std::string previous_string(std::string source, std::string string)
     {
         if(source.substr(i, string.length()) == string)
         {
-            std::cout << source[i] << std::endl;
             i -= string.length();
             while(source[i] == ' ' || source[i] == '\t')
                 i--;
@@ -54,17 +53,27 @@ std::string previous_string(std::string source, std::string string)
 }
 
 
-Lexer::Lexer(std::string& source)
+Lexer::Lexer(std::string& source, std::vector<std::string>& all_lines)
 {
+    Lines = all_lines;
     sourceCode = source;
     iter = 0;
+    line_iter = 0;
 }
 
 char Lexer::currentChar() 
 {
+    char current = sourceCode[iter];
     if (iter >= sourceCode.length()) 
         return '\0';
-    return sourceCode[iter];
+    return current;
+}
+
+std::string Lexer::currentLine()
+{
+    std::string currect_line = Lines[line_iter];
+
+    return currect_line;
 }
 
 Token Lexer::makeToken(TokenType type, const std::string& value) 
@@ -97,6 +106,7 @@ std::vector<Token> Lexer::tokenize()
     
     while (currentChar() != '\0') 
     {
+        std::cout << currentLine() <<std::endl;
         if (currentChar() == '(') 
         {
             tokens.push_back(makeToken(TokenType::LEFT_PAREN, "("));
@@ -136,18 +146,19 @@ std::vector<Token> Lexer::tokenize()
         }
         else if (currentChar() == '=') 
         {
+            // std::string identifier = previous_string(currentLine(), "=");
+            // std::string value = next_string(currentLine(), "=");
             tokens.push_back(makeToken(TokenType::EQUAL, "="));
-            std::string identifier = previous_string(sourceCode, "=");
-            std::string value = next_string(sourceCode, "=");
-
-            tokens.push_back(makeToken(TokenType::IDENTIFIER, identifier));
-            tokens.push_back(makeToken(TokenType::VALUE, value));
-            iter++;
-            iter += identifier.length();
+            // tokens.push_back(makeToken(TokenType::IDENTIFIER, identifier));
+            // tokens.push_back(makeToken(TokenType::VALUE, value));
             
+            iter++;
         }
         else if (currentChar() == ' ' || currentChar() == '\n' || currentChar() == '\t' || currentChar() == '\r')
+        {
+            line_iter++;
             iter++;
+        }
         else 
         {
             std::string unknownValue;
@@ -160,6 +171,17 @@ std::vector<Token> Lexer::tokenize()
     tokens.push_back(makeToken(TokenType::EOF_TOKEN, ""));
     return tokens;
 }
+
+void Lexer::print_lines(void)
+{
+    size_t i = 0;
+    while(i < this->Lines.size())
+    {
+        std::cout << this->Lines[i] << std::endl;
+        i++;
+    }
+}
+
 
 void Lexer::print_all_tokens(std::vector<Token>& tokens) 
 {

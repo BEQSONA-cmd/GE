@@ -51,16 +51,21 @@ class Lexer
 {
     private:
         size_t iter;
+        size_t line_iter; 
         std::string sourceCode;
+        std::vector<std::string> Lines;
 
+        // currentline should return the whole line where the iterator is
+        std::string currentLine();
         char currentChar();
         Token makeToken(TokenType type, const std::string& value = "");
 
     public:
         // constructor
-        Lexer(std::string& source);
+        Lexer(std::string& source, std::vector<std::string>& all_lines);
 
         std::vector<Token> tokenize();
+        void print_lines();
         void print_all_tokens(std::vector<Token>& tokens);
 };
 
