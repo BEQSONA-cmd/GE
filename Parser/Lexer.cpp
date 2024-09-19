@@ -146,11 +146,7 @@ std::vector<Token> Lexer::tokenize()
         }
         else if (currentChar() == '=') 
         {
-            // std::string identifier = previous_string(currentLine(), "=");
-            // std::string value = next_string(currentLine(), "=");
             tokens.push_back(makeToken(TokenType::EQUAL, "="));
-            // tokens.push_back(makeToken(TokenType::IDENTIFIER, identifier));
-            // tokens.push_back(makeToken(TokenType::VALUE, value));
             
             iter++;
         }
