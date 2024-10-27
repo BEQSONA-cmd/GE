@@ -9,6 +9,9 @@
 
 const std::string FUNC_PRINT = "ბეჭდვა";
 const std::string FUNC_INPUT = "შეყვანა";
+const std::string FUNC_IF = "თუ";
+const std::string FUNC_FUNCTION = "ფუნქცია";
+
 
 
 // key must be FUNC_PRINT or FUNC_INPUT
