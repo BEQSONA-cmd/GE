@@ -1,8 +1,25 @@
-#include <iostream>
-#include <fstream>
-#include <string>
-#include "Includes/Lexer.h"
-#include "Includes/Parser.h"
+#include "Includes/Parser.hpp"
+#include "Includes/Executer.hpp"
+#include <vector>
+
+bool check_source_file(char **av)
+{
+    std::string sourceFile = av[1];
+    if (sourceFile.substr(sourceFile.find_last_of(".") + 1) != "ge")
+    {
+        std::cout << "Invalid file extension. Please provide a file with .ge extension." << std::endl;
+        return false;
+    }
+
+    std::ifstream file(sourceFile);
+    if (!file.is_open())
+    {
+        std::cout << "Could not open the file. Please check the file path." << std::endl;
+        return false;
+    }
+
+    return true;
+}
 
 std::vector<std::string> get_all_lines(char **av)
 {
@@ -21,30 +38,23 @@ int main(int ac, char** av)
         std::cout << "Usage: " << av[0] << " <source-file.ge>" << std::endl;
         return 1;
     }
-
-    std::string filename = av[1];
-    std::ifstream sourceFile(filename);    
-
-    if (!sourceFile) 
-    {
-        std::cerr << "Error: Could not open file " << filename << std::endl;
+    if(!check_source_file(av))
         return 1;
-    }
+    std::vector<std::string> Lines = get_all_lines(av);
 
-    std::string sourceCode((std::istreambuf_iterator<char>(sourceFile)), std::istreambuf_iterator<char>());
-    std::vector<std::string> Lines;
-    Lines = get_all_lines(av);
+    // size_t i = 0;
+    // while(i < Lines.size())
+    // {
+    //     std::cout << Lines[i] << std::endl;
+    //     i++;
+    // }
 
-    Lexer lexer(sourceCode, Lines);
-    auto tokens = lexer.tokenize();
-    // lexer.print_all_tokens(tokens);
+    Parser parser(Lines);
+    parser.parse();
+    // parser.print_instructions();
 
-    // Parser parser(tokens);
-    // auto ast = parser.parse();
-    // parser.print_ast(ast);
-
-    // delete ast;
+    Excecuter excecuter(parser.get_instructions());
+    excecuter.execute();
 
     return 0;
 }
-
