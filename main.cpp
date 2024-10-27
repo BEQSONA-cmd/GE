@@ -52,9 +52,12 @@ int main(int ac, char** av)
     Parser parser(Lines);
     parser.parse();
     // parser.print_instructions();
+    parser.print_variables();
 
-    Excecuter excecuter(parser.get_instructions());
-    excecuter.execute();
+    // Excecuter excecuter(parser.get_instructions());
+    // excecuter.execute();
+    
+
 
     return 0;
 }

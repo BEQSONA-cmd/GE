@@ -14,6 +14,10 @@ class Excecuter
     public:
         Excecuter(Hash_Map *instructions);
         void execute();
+
+    // attributes:
+        void print_function(std::string value);
+        std::string input_function(std::string value);
 };
 
 

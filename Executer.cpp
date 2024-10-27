@@ -1,5 +1,6 @@
 #include "Includes/Executer.hpp"
 
+
 Excecuter::Excecuter(Hash_Map *instructions)
 {
     this->instructions = instructions;
@@ -11,10 +12,23 @@ void Excecuter::execute()
     while (current != NULL)
     {
         if (current->key == FUNC_PRINT)
-        {
-            std::cout << current->value << std::endl;
-        }
+            print_function(current->value);
+        else if(current->key == FUNC_INPUT)
+            input_function(current->value);
         current = current->next;
     }
 }
 
+// attributes:
+void Excecuter::print_function(std::string value)
+{
+    std::cout << value << std::endl;
+}
+
+std::string Excecuter::input_function(std::string value)
+{
+    std::string input;
+    std::cout << value;
+    std::cin >> input;
+    return input;
+}
