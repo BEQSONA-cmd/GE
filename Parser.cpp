@@ -1,89 +1,9 @@
 #include "Includes/Parser.hpp"
 
-std::string get_next_string(std::string line, std::string string)
-{
-    std::string next_string = "";
-    size_t i = 0;
-
-    if(string == "=")
-    {
-        while(line[i] != '=')
-            i++;
-        i++;
-        while(line[i] == ' ' || line[i] == '\t')
-            i++;
-        while(isprint(line[i]) && line[i] != ' ' && line[i] != '\t' && line[i] != '\n' && line[i] != '\0')
-        {
-            next_string += line[i];
-            i++;
-        }
-    }
-    else
-    {
-        while(line[i] != string[0])
-            i++;
-        while(line[i] == string[i])
-            i++;
-        while(line[i] == ' ' || line[i] == '\t')
-            i++;
-        while(line[i] != ' ' && line[i] != '\t' && line[i] != '\n' && line[i] != '\0')
-        {
-            next_string += line[i];
-            i++;
-        }
-    }
-    return next_string;
-}
-
-std::string get_value_string(std::string line)
-{
-    std::string value = "";
-    size_t i = 0;
-    while(line[i] != '"')
-    {
-        i++;
-    }
-    i++;
-    while(line[i] != '"')
-    {
-        value += line[i];
-        i++;
-    }
-    return value;
-}
-
 Hash_Map *Parser::get_instructions()
 {
     return this->instructions;
 }
-
-Hash_Map::Hash_Map()
-{
-    this->head = NULL;
-}
-
-void Hash_Map::insert(std::string key, std::string value , Type type)
-{
-    Hash_Map_Enter *new_enter = new Hash_Map_Enter();
-    new_enter->key = key;
-    new_enter->value = value;
-    new_enter->type = type;
-    new_enter->next = this->head;
-    this->head = new_enter;
-}
-
-std::string Hash_Map::get(std::string key)
-{
-    Hash_Map_Enter *current = this->head;
-    while (current != NULL)
-    {
-        if (current->key == key)
-            return current->value;
-        current = current->next;
-    }
-    return "";
-}
-
 
 Parser::Parser(std::vector<std::string> lines)
 {

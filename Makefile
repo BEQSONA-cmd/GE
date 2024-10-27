@@ -2,7 +2,7 @@ NAME = ge
 CC = c++
 FLAGS = -Wall -Werror -Wextra 
 
-SRC = main.cpp Parser.cpp Executer.cpp
+SRC = main.cpp Parser.cpp Executer.cpp utils/Parser_utils.cpp utils/Hash_Map.cpp
 
 OBJ = $(SRC:.cpp=.o)
 
