@@ -3,17 +3,53 @@
 std::string get_next_string(std::string line, std::string string)
 {
     std::string next_string = "";
-    size_t i = line.find(string) + string.length();
-    while(line[i] == ' ')
+    size_t i = 0;
+
+    if(string == "=")
     {
+        while(line[i] != '=')
+            i++;
         i++;
+        while(line[i] == ' ' || line[i] == '\t')
+            i++;
+        while(isprint(line[i]) && line[i] != ' ' && line[i] != '\t' && line[i] != '\n' && line[i] != '\0')
+        {
+            next_string += line[i];
+            i++;
+        }
     }
-    while(line[i] != ' ')
+    else
     {
-        next_string += line[i];
-        i++;
+        while(line[i] != string[0])
+            i++;
+        while(line[i] == string[i])
+            i++;
+        while(line[i] == ' ' || line[i] == '\t')
+            i++;
+        while(line[i] != ' ' && line[i] != '\t' && line[i] != '\n' && line[i] != '\0')
+        {
+            next_string += line[i];
+            i++;
+        }
     }
     return next_string;
+}
+
+std::string get_value_string(std::string line)
+{
+    std::string value = "";
+    size_t i = 0;
+    while(line[i] != '"')
+    {
+        i++;
+    }
+    i++;
+    while(line[i] != '"')
+    {
+        value += line[i];
+        i++;
+    }
+    return value;
 }
 
 Hash_Map *Parser::get_instructions()
@@ -118,7 +154,6 @@ void Parser::check_instruction(std::string line)
 
 void Parser::check_variable(std::string line)
 {
-    size_t i = 0;
     if(line.find(STRING) != std::string::npos)
     {
         if(line.find('=') == std::string::npos)
@@ -129,35 +164,11 @@ void Parser::check_variable(std::string line)
 
         std::string key = "";
         std::string value = "";
-        i = line.find(STRING) + STRING.length();
-        // it will skip the first space
-        i++;
 
-        // it will skip until 'გამარჯობა'
-        while(line[i] == ' ')
-        {
-            i++;
-        }
-        // it will get 'გამარჯობა' variable name
-        while(line[i] != ' ')
-        {
-            key += line[i];
-            i++;
-        }
-        i++;
-        // it will skip until '"'
-        while(line[i] != '"')
-        {
-            i++;
-        }
-        i++;
-        // it will get 'Hello World' variable value
-        while(line[i] != '"')
-        {
-            value += line[i];
-            i++;
-        }
+        key = get_next_string(line, STRING);
+        value = get_value_string(line);
         this->variables->insert(key, value, Type::T_STRING);
+
 
     }
     else if(line.find(INT) != std::string::npos)
@@ -191,25 +202,33 @@ void Parser::parse()
 void Parser::print_instructions()
 {
     Hash_Map_Enter *current = this->instructions->head;
+    int iter = 0;
+
     while (current != NULL)
     {
+        std::cout << "Instruction (" << iter << ") : { ";
         if(current->type == Type::T_FUNC)
-            std::cout << "type: Function" << std::endl;
-        std::cout << "key: " << current->key << " value: " << current->value << std::endl;
+            std::cout << "(type: Function) ";
+        std::cout << "(key: " << current->key << ") (value: " << current->value << ") }" << std::endl;
         current = current->next;
+        iter++;
     }
 }
 
 void Parser::print_variables()
 {
     Hash_Map_Enter *current = this->variables->head;
+    int iter = 0;
+
     while (current != NULL)
     {
+        std::cout << "Variable (" << iter << ") : { ";
         if(current->type == Type::T_INT)
-            std::cout << "type: Integer" << std::endl;
+            std::cout << "(type: Integer) ";
         else if(current->type == Type::T_STRING)
-            std::cout << "type: String" << std::endl;
-        std::cout << "key: " << current->key << " value: " << current->value << std::endl;
+            std::cout << "(type: String) ";
+        std::cout << "(key: " << current->key << ") value: (" << current->value << ") }" << std::endl;
         current = current->next;
+        iter++;
     }
 }
