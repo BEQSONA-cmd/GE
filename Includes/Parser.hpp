@@ -19,6 +19,21 @@ const std::string STRING = "string";
 const std::string INT = "int";
 const std::string FUNC = "function";
 
+// operators
+const std::string ASSIGN = "=";
+const std::string ADD = "+";
+const std::string SUB = "-";
+const std::string MUL = "*";
+const std::string DIV = "/";
+
+// compare
+const std::string EQUAL = "==";
+const std::string NOT_EQUAL = "!=";
+const std::string GREATER = ">";
+const std::string LESS = "<";
+const std::string GREATER_EQUAL = ">=";
+const std::string LESS_EQUAL = "<=";
+
 // parser will parse the code and create a hash map
 class Parser
 {
