@@ -6,6 +6,7 @@
 #include <string>
 #include <vector>
 #include "Hash_Map.hpp"
+#include "Utils.hpp"
 
 // functions
 const std::string FUNC_PRINT = "print";
@@ -27,13 +28,13 @@ class Parser
         Hash_Map *variables;
     public:
         Parser(std::vector<std::string> lines);
-        bool parse();
+        void parse();
 
-        bool check_instruction(std::string line);
+        void check_instruction(std::string line);
         void print_instructions();
         Hash_Map *get_instructions();
 
-        bool check_variable(std::string line);
+        void check_variable(std::string line);
         void print_variables();
 
         ~Parser();

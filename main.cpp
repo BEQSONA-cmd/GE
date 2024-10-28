@@ -50,8 +50,7 @@ int main(int ac, char** av)
     // }
 
     Parser parser(Lines);
-    if(!parser.parse())
-        return 1;
+    parser.parse();
     // parser.print_instructions();
     // parser.print_variables();
 

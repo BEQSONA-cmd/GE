@@ -35,7 +35,7 @@ Parser::~Parser()
     delete this->variables;
 }
 
-bool Parser::check_instruction(std::string line)
+void Parser::check_instruction(std::string line)
 {
     size_t i = 0;
 
@@ -45,7 +45,7 @@ bool Parser::check_instruction(std::string line)
     if(line.find(FUNC_PRINT) != std::string::npos)
     {
         if(!is_str_in_str(line, FUNC_PRINT))
-            return false;
+            ft_error(line, 6, this);
         i = line.find(FUNC_PRINT) + FUNC_PRINT.length();
         func = FUNC_PRINT;
         while(line[i] != '(')
@@ -55,7 +55,7 @@ bool Parser::check_instruction(std::string line)
     else if(line.find(FUNC_INPUT) != std::string::npos)
     {
         if(!is_str_in_str(line, FUNC_INPUT))
-            return false;
+            ft_error(line, 6, this);
         i = line.find(FUNC_INPUT) + FUNC_INPUT.length();
         func = FUNC_INPUT;
         while(line[i] != '(')
@@ -63,7 +63,7 @@ bool Parser::check_instruction(std::string line)
         i++;
     }
     else
-        return true;
+        return;
     
     if(line[i] == '"')
     {
@@ -87,19 +87,18 @@ bool Parser::check_instruction(std::string line)
         value = this->variables->get(key);
     }
     this->instructions->insert(func, value, Type::T_FUNC);
-    return true;
 }
 
-bool Parser::check_variable(std::string line)
+void Parser::check_variable(std::string line)
 {
     if(line.find(STRING) != std::string::npos)
     {
         if(!ft_strcmp(get_first_string(line) , STRING))
-            return true;
+            return;
         if(string_count(line) < 4)
-            return false;
+            ft_error(line, 6, this);
         if(line.find('=') == std::string::npos)
-            return false;
+            ft_error(line, 7, this);
 
         std::string key = "";
         std::string value = "";
@@ -107,17 +106,17 @@ bool Parser::check_variable(std::string line)
         key = get_next_string(line, STRING);
         value = get_value_string(line);
         if(key == "" || value == "")
-            return false;
+            ft_error(line, 2, this);
         this->variables->insert(key, value, Type::T_STRING);
     }
     else if(line.find(INT) != std::string::npos)
     {
         if(!ft_strcmp(get_first_string(line) , INT))
-            return true;
+            return;
         if(string_count(line) < 4)
-            return false;
+            ft_error(line, 6, this);
         if(line.find('=') == std::string::npos)
-            return false;
+            ft_error(line, 7, this);
         std::string key = "";
         std::string value = "";
         size_t int_value = 0;
@@ -126,35 +125,25 @@ bool Parser::check_variable(std::string line)
         value = get_next_string(line, "=");
         int_value = ft_atoi(value);
         if(key == "" || value == "")
-            return false;
+            ft_error(line, 3, this);
         if(int_value == 0 && value != "0")
-            return false;
+            ft_error(line, 3, this);
         this->variables->insert(key, value, Type::T_INT);
     }
-    return true;
 }
 
-bool Parser::parse()
+void Parser::parse()
 {
     size_t i = 0;
     while(i < this->lines.size())
     {
         std::string line = this->lines[i];
         if(!is_two_qoute(line))
-        {
-            std::cout << "Error: Syntax error" << std::endl;
-            std::cout << line << std::endl;
-            return false;
-        }
-        if(!check_variable(line) || !check_instruction(line))
-        {
-            std::cout << "Error: Syntax error" << std::endl;
-            std::cout << line << std::endl;
-            return false;
-        }
+            ft_error(line, 1, this);
+        check_variable(line);
+        check_instruction(line);
         i++;
     }
-    return true;
 }
 
 void Parser::print_instructions()

@@ -1,3 +1,10 @@
-int beqa = 0
 
-print (beqa)
+
+string some = "here: "
+
+input (some)
+
+
+print(some)
+
+print("the end ")
