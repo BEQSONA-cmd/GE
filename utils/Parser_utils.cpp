@@ -1,4 +1,4 @@
-#include "../includes/Parser.hpp"
+#include "../Includes/Parser.hpp"
 
 std::string get_next_string(std::string line, std::string string)
 {
@@ -51,4 +51,3 @@ std::string get_value_string(std::string line)
     }
     return value;
 }
-

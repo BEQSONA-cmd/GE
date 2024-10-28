@@ -1,5 +1,4 @@
-#include "../includes/Hash_Map.hpp"
-
+#include "../Includes/Hash_Map.hpp"
 
 Hash_Map::Hash_Map()
 {

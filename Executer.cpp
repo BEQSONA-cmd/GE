@@ -1,6 +1,5 @@
 #include "Includes/Executer.hpp"
 
-
 Excecuter::Excecuter(Hash_Map *instructions)
 {
     this->instructions = instructions;
