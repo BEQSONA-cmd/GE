@@ -1,6 +1,8 @@
 NAME = ge
 CC = c++
-FLAGS = -Wall -Werror -Wextra 
+
+FLAGS = -Wall -Werror -Wextra -g
+# FLAGS += -fsanitize=addresse
 
 SRC = $(wildcard **/**.cpp) $(wildcard *.cpp)
 

@@ -1,6 +1,6 @@
 #include "../Includes/Utils.hpp"
 
-void ft_error(std::string line, int errnum, Parser *parser)
+void ft_error(std::string line, int errnum)
 {
     if(errnum == 1)
         std::cout << "Error: qoute number error. There should be 2 qoutes in the line." << std::endl;
@@ -16,7 +16,9 @@ void ft_error(std::string line, int errnum, Parser *parser)
         std::cout << "Error: incorrect syntax." << std::endl;
     else if(errnum == 7)
         std::cout << "Error: no '=' found." << std::endl;
+    else if(errnum == 8)
+        std::cout << "Error: variable doesn't have a value." << std::endl;
     std::cout << "Error at line: " << line << std::endl;
-    delete parser;
-    exit(1);
+
+    throw std::runtime_error("Error");
 }

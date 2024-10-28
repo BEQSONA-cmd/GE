@@ -15,27 +15,28 @@ bool ft_strchr(std::string str, char c)
 
 std::vector<std::string> get_all_string_space(std::string line)
 {
-    std::vector<std::string> strings;
+    std::vector<std::string> strings = {};
     size_t i = 0;
     std::string str = "";
 
-    while(i < line.length())
+    while (i < line.length())
     {
-        if(is_char(line[i]))
+        if (is_char(line[i]))
         {
-            if(line[i] == '"')
+            if (line[i] == '"')
             {
                 i++;
-                while(line[i] != '"')
+                while (i < line.length() && line[i] != '"')
                 {
                     str += line[i];
                     i++;
                 }
-                str += line[i];
+                if (i < line.length())
+                    str += line[i];
             }
             else
             {
-                while(is_char(line[i]))
+                while (i < line.length() && is_char(line[i]))
                 {
                     str += line[i];
                     i++;
@@ -48,6 +49,7 @@ std::vector<std::string> get_all_string_space(std::string line)
     }
     return strings;
 }
+
 
 std::vector<std::string> get_all_string_func(std::string line)
 {
@@ -149,19 +151,69 @@ std::string get_next_string(std::string line, std::string string)
     return next_string;
 }
 
-std::string get_value_string(std::string line)
+std::string get_previous_string(std::string line, std::string string)
+{
+    std::vector<std::string> strings = get_all_string_space(line);
+    size_t i = 0;
+
+    while(i < strings.size())
+    {
+        if(ft_strcmp(strings[i], string))
+            return strings[i - 1];
+        i++;
+    }
+    return "";
+}
+
+std::string get_value_string(std::string line, Hash_Map *variables)
 {
     std::string value = "";
     size_t i = 0;
     while(line[i] != '"' && i < line.length())
         i++;
     if(i == line.length())
-        return "";
+    {
+        std::string key = "";
+        key = get_next_string(line, "=");
+
+        value = variables->get(key);
+        if(key == "" || value == "")
+            ft_error(line, 8);
+        return value;
+    }
     i++;
     while(line[i] != '"')
     {
         value += line[i];
         i++;
+    }
+    return value;
+}
+
+std::string get_value_int(std::string line, Hash_Map *variables)
+{
+    std::string value = "";
+    std::string key = "";
+    size_t i = 0;
+    
+    key = get_next_string(line, "=");
+    if(key == "")
+        ft_error(line, 8);
+    
+    if(!(is_digit(key[0]) || key[0] == '-'))
+    {
+        value = variables->get(key);
+        if(value == "")
+            ft_error(line, 8);
+    }
+    else
+    {
+        while(i < key.length())
+        {
+            if(is_digit(key[i]) || key[i] == '-')
+                value += key[i];
+            i++;
+        }
     }
     return value;
 }

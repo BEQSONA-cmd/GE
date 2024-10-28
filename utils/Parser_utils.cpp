@@ -7,6 +7,13 @@ bool is_char(char c)
     return false;
 }
 
+bool is_digit(char c)
+{
+    if(c >= '0' && c <= '9')
+        return true;
+    return false;
+}
+
 size_t ft_atoi(std::string str)
 {
     size_t i = 0;
@@ -86,4 +93,38 @@ size_t string_count(std::string line)
         i++;
     }
     return count;
+}
+
+void Parser::print_instructions()
+{
+    Hash_Map_Enter *current = this->instructions->head;
+    int iter = 0;
+
+    while (current != NULL)
+    {
+        std::cout << "Instruction (" << iter << ") : { ";
+        if(current->type == Type::T_FUNC)
+            std::cout << "(type: Function) ";
+        std::cout << "(key: " << current->key << ") (value: " << current->value << ") }" << std::endl;
+        current = current->next;
+        iter++;
+    }
+}
+
+void Parser::print_variables()
+{
+    Hash_Map_Enter *current = this->variables->head;
+    int iter = 0;
+
+    while (current != NULL)
+    {
+        std::cout << "Variable (" << iter << ") : { ";
+        if(current->type == Type::T_INT)
+            std::cout << "(type: Integer) ";
+        else if(current->type == Type::T_STRING)
+            std::cout << "(type: String) ";
+        std::cout << "(key: " << current->key << ") value: (" << current->value << ") }" << std::endl;
+        current = current->next;
+        iter++;
+    }
 }

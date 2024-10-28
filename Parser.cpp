@@ -24,112 +24,16 @@ Parser::~Parser()
         current = next;
     }
     delete this->instructions;
-
     current = this->variables->head;
+
     while (current != NULL)
     {
         next = current->next;
         delete current;
         current = next;
     }
+
     delete this->variables;
-}
-
-void Parser::check_instruction(std::string line)
-{
-    size_t i = 0;
-
-    std::string value = "";
-    std::string func = "";
-
-    if(line.find(FUNC_PRINT) != std::string::npos)
-    {
-        if(!is_str_in_str(line, FUNC_PRINT))
-            ft_error(line, 6, this);
-        i = line.find(FUNC_PRINT) + FUNC_PRINT.length();
-        func = FUNC_PRINT;
-        while(line[i] != '(')
-            i++;
-        i++;
-    }
-    else if(line.find(FUNC_INPUT) != std::string::npos)
-    {
-        if(!is_str_in_str(line, FUNC_INPUT))
-            ft_error(line, 6, this);
-        i = line.find(FUNC_INPUT) + FUNC_INPUT.length();
-        func = FUNC_INPUT;
-        while(line[i] != '(')
-            i++;
-        i++;
-    }
-    else
-        return;
-    
-    if(line[i] == '"')
-    {
-        while(line[i] != '"')
-            i++;
-        i++;
-        while(line[i] != '"')
-        {
-            value += line[i];
-            i++;
-        }
-    }
-    else
-    {
-        std::string key = "";
-        while(is_char(line[i]) && line[i] != ')')
-        {
-            key += line[i];
-            i++;
-        }
-        value = this->variables->get(key);
-    }
-    this->instructions->insert(func, value, Type::T_FUNC);
-}
-
-void Parser::check_variable(std::string line)
-{
-    if(line.find(STRING) != std::string::npos)
-    {
-        if(!ft_strcmp(get_first_string(line) , STRING))
-            return;
-        if(string_count(line) < 4)
-            ft_error(line, 6, this);
-        if(line.find('=') == std::string::npos)
-            ft_error(line, 7, this);
-
-        std::string key = "";
-        std::string value = "";
-
-        key = get_next_string(line, STRING);
-        value = get_value_string(line);
-        if(key == "" || value == "")
-            ft_error(line, 2, this);
-        this->variables->insert(key, value, Type::T_STRING);
-    }
-    else if(line.find(INT) != std::string::npos)
-    {
-        if(!ft_strcmp(get_first_string(line) , INT))
-            return;
-        if(string_count(line) < 4)
-            ft_error(line, 6, this);
-        if(line.find('=') == std::string::npos)
-            ft_error(line, 7, this);
-        std::string key = "";
-        std::string value = "";
-        size_t int_value = 0;
-
-        key = get_next_string(line, INT);
-        value = get_next_string(line, "=");
-        int_value = ft_atoi(value);
-        if(key == "" || value == "")
-            ft_error(line, 3, this);
-        if(int_value == 0 && value != "0")
-            ft_error(line, 3, this);
-        this->variables->insert(key, value, Type::T_INT);
-    }
 }
 
 void Parser::parse()
@@ -139,43 +43,45 @@ void Parser::parse()
     {
         std::string line = this->lines[i];
         if(!is_two_qoute(line))
-            ft_error(line, 1, this);
-        check_variable(line);
+            ft_error(line, 1);
+        
+        std::vector<std::string> words = get_all_string_space(this->lines[i]);
+        if(words.size() == 0)
+        {
+            i++;
+            continue;
+        }
+        
+        if(words[0] == STRING || words[0] == INT)
+            create_variable(line);
+        
+        if (words.size() > 2 && ((words[1] == "=") || (words[2] == "=")))
+        {
+            std::string key = get_previous_string(line, "=");
+            Type type = this->variables->get_type(key);
+            
+            if(type == T_STRING)
+                assign_string(line);
+            else if(type == T_INT)
+                assign_int(line);
+            else
+                ft_error(line, 8);
+        }
+        if(words.size() > 2 && ((words[1] == "+=") || (words[2] == "+=")))
+        {
+            std::string key = get_previous_string(line, "+=");
+            Type type = this->variables->get_type(key);
+
+            if(type == T_STRING)
+                append_string(line);
+            else if(type == T_INT)
+                add_int(line);
+            else
+                ft_error(line, 8);
+        }
+
         check_instruction(line);
         i++;
     }
 }
 
-void Parser::print_instructions()
-{
-    Hash_Map_Enter *current = this->instructions->head;
-    int iter = 0;
-
-    while (current != NULL)
-    {
-        std::cout << "Instruction (" << iter << ") : { ";
-        if(current->type == Type::T_FUNC)
-            std::cout << "(type: Function) ";
-        std::cout << "(key: " << current->key << ") (value: " << current->value << ") }" << std::endl;
-        current = current->next;
-        iter++;
-    }
-}
-
-void Parser::print_variables()
-{
-    Hash_Map_Enter *current = this->variables->head;
-    int iter = 0;
-
-    while (current != NULL)
-    {
-        std::cout << "Variable (" << iter << ") : { ";
-        if(current->type == Type::T_INT)
-            std::cout << "(type: Integer) ";
-        else if(current->type == Type::T_STRING)
-            std::cout << "(type: String) ";
-        std::cout << "(key: " << current->key << ") value: (" << current->value << ") }" << std::endl;
-        current = current->next;
-        iter++;
-    }
-}

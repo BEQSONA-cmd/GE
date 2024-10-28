@@ -26,6 +26,8 @@ std::vector<std::string> get_all_lines(char **av)
     std::ifstream sourceFile(av[1]);
     std::string line;
     std::vector<std::string> lines;
+    std::string next_line = "";
+
     while (std::getline(sourceFile, line))
         lines.push_back(line);
     return lines;
@@ -50,9 +52,14 @@ int main(int ac, char** av)
     // }
 
     Parser parser(Lines);
-    parser.parse();
-    // parser.print_instructions();
-    // parser.print_variables();
+    try
+    {
+        parser.parse();
+    }
+    catch(const std::exception& e)
+    {
+        return 1;
+    }
 
     Excecuter excecuter(parser.get_instructions());
     excecuter.execute();
