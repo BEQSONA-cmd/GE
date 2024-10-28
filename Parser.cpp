@@ -96,7 +96,7 @@ bool Parser::check_variable(std::string line)
     {
         if(!ft_strcmp(get_first_string(line) , STRING))
             return true;
-        if(string_count(line) != 4)
+        if(string_count(line) < 4)
             return false;
         if(line.find('=') == std::string::npos)
             return false;
@@ -106,7 +106,7 @@ bool Parser::check_variable(std::string line)
 
         key = get_next_string(line, STRING);
         value = get_value_string(line);
-        if(value == "")
+        if(key == "" || value == "")
             return false;
         this->variables->insert(key, value, Type::T_STRING);
     }
@@ -114,15 +114,21 @@ bool Parser::check_variable(std::string line)
     {
         if(!ft_strcmp(get_first_string(line) , INT))
             return true;
-        if(string_count(line) != 4)
+        if(string_count(line) < 4)
             return false;
         if(line.find('=') == std::string::npos)
             return false;
         std::string key = "";
         std::string value = "";
+        size_t int_value = 0;
 
         key = get_next_string(line, INT);
         value = get_next_string(line, "=");
+        int_value = ft_atoi(value);
+        if(key == "" || value == "")
+            return false;
+        if(int_value == 0 && value != "0")
+            return false;
         this->variables->insert(key, value, Type::T_INT);
     }
     return true;
@@ -134,13 +140,13 @@ bool Parser::parse()
     while(i < this->lines.size())
     {
         std::string line = this->lines[i];
-        if(!check_variable(line))
+        if(!is_two_qoute(line))
         {
             std::cout << "Error: Syntax error" << std::endl;
             std::cout << line << std::endl;
             return false;
         }
-        if(!check_instruction(line))
+        if(!check_variable(line) || !check_instruction(line))
         {
             std::cout << "Error: Syntax error" << std::endl;
             std::cout << line << std::endl;

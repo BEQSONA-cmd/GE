@@ -40,13 +40,16 @@ class Parser
 };
 
 std::string get_next_string(std::string line, std::string string);
-std::string get_first_string(std::string line);
-std::string get_value_string(std::string line);
-bool is_str_in_str(std::string line, std::string string);
 std::vector<std::string> get_all_string_space(std::string line);
 std::vector<std::string> get_all_string_func(std::string line);
-size_t string_count(std::string line);
+std::string get_first_string(std::string line);
+std::string get_value_string(std::string line);
+
+bool is_str_in_str(std::string line, std::string string);
 bool ft_strcmp(std::string str1, std::string str2);
+size_t string_count(std::string line);
+bool is_two_qoute(std::string line);
+size_t ft_atoi(std::string str);
 bool is_char(char c);
 
 #endif
