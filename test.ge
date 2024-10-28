@@ -1,0 +1,17 @@
+string a = "hello "
+
+string b = "world"
+
+a += b
+
+print(a)
+
+int i
+
+i = -2
+
+int  j = 16
+
+j += i
+
+print(j)   

@@ -1,20 +1,5 @@
 
 
+int i = 5
 
-string a = "hello "
-
-string b = "world"
-
-a += b
-
-print(a)
-
-int i
-
-i = 15
-
-int  j = 16
-
-j += i 
-
-print(j)
+print(i)

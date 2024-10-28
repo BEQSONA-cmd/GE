@@ -29,6 +29,7 @@ class Parser
     public:
         Parser(std::vector<std::string> lines);
         void parse();
+        void parse_variables(std::vector<std::string> words, std::string line);
         ~Parser();
 
         void check_instruction(std::string line);
@@ -41,6 +42,7 @@ class Parser
 
         void assign_int(std::string line);
         void add_int(std::string line);
+        void sub_int(std::string line);
 
         void print_variables();
 };

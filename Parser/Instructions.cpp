@@ -51,5 +51,7 @@ void Parser::check_instruction(std::string line)
         }
         value = this->variables->get(key);
     }
+    if(value == "")
+        ft_error(line, 8);
     this->instructions->insert(func, value, Type::T_FUNC);
 }

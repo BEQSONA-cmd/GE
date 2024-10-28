@@ -36,6 +36,47 @@ Parser::~Parser()
     delete this->variables;
 }
 
+void Parser::parse_variables(std::vector<std::string> words, std::string line)
+{
+    if(words[0] == STRING || words[0] == INT)
+        this->create_variable(line);
+
+    if (words.size() > 2 && ((words[1] == "=") || (words[2] == "=")))
+    {
+        std::string key = get_previous_string(line, "=");
+        Type type = this->variables->get_type(key);
+
+        if(type == T_STRING)
+            this->assign_string(line);
+        else if(type == T_INT)
+            this->assign_int(line);
+        else
+            ft_error(line, 8);
+    }
+    else if (words.size() > 2 && ((words[1] == "+=") || (words[2] == "+=")))
+    {
+        std::string key = get_previous_string(line, "+=");
+        Type type = this->variables->get_type(key);
+
+        if(type == T_STRING)
+            this->append_string(line);
+        else if(type == T_INT)
+            this->add_int(line);
+        else
+            ft_error(line, 8);
+    }
+    else if (words.size() > 2 && ((words[1] == "-=") || (words[2] == "-=")))
+    {
+        std::string key = get_previous_string(line, "-=");
+        Type type = this->variables->get_type(key);
+
+        if(type == T_INT)
+            this->sub_int(line);
+        else
+            ft_error(line, 9);
+    }
+}
+
 void Parser::parse()
 {
     size_t i = 0;
@@ -51,34 +92,7 @@ void Parser::parse()
             i++;
             continue;
         }
-        
-        if(words[0] == STRING || words[0] == INT)
-            create_variable(line);
-        
-        if (words.size() > 2 && ((words[1] == "=") || (words[2] == "=")))
-        {
-            std::string key = get_previous_string(line, "=");
-            Type type = this->variables->get_type(key);
-            
-            if(type == T_STRING)
-                assign_string(line);
-            else if(type == T_INT)
-                assign_int(line);
-            else
-                ft_error(line, 8);
-        }
-        if(words.size() > 2 && ((words[1] == "+=") || (words[2] == "+=")))
-        {
-            std::string key = get_previous_string(line, "+=");
-            Type type = this->variables->get_type(key);
-
-            if(type == T_STRING)
-                append_string(line);
-            else if(type == T_INT)
-                add_int(line);
-            else
-                ft_error(line, 8);
-        }
+        parse_variables(words, line);
 
         check_instruction(line);
         i++;

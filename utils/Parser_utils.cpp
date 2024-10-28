@@ -18,16 +18,26 @@ size_t ft_atoi(std::string str)
 {
     size_t i = 0;
     size_t res = 0;
+    bool is_negative = false;
 
-    while(i < str.length())
+    if (str[i] == '-')
     {
-        if(str[i] < '0' || str[i] > '9')
+        is_negative = true;
+        i++;
+    }
+
+    while (i < str.length())
+    {
+        if (str[i] < '0' || str[i] > '9')
             return 0;
 
-        if(str[i] >= '0' && str[i] <= '9')
+        if (str[i] >= '0' && str[i] <= '9')
             res = res * 10 + str[i] - '0';
         i++;
     }
+
+    if (is_negative)
+        return -res;
     return res;
 }
 

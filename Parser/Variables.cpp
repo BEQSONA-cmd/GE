@@ -51,6 +51,19 @@ void Parser::add_int(std::string line)
     variables->replace(key, std::to_string(new_value));
 }
 
+void Parser::sub_int(std::string line)
+{
+    std::string value = "";
+    value = get_value_int(line, variables);
+
+    if(value == "")
+        ft_error(line, 8);
+    std::string key = get_previous_string(line, "-=");
+
+    int new_value = ft_atoi(variables->get(key)) - ft_atoi(value);
+    variables->replace(key, std::to_string(new_value));
+}
+
 void Parser::create_variable(std::string line)
 {
     if(line.find(STRING) != std::string::npos)

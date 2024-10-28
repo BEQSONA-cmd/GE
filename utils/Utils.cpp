@@ -18,6 +18,8 @@ void ft_error(std::string line, int errnum)
         std::cout << "Error: no '=' found." << std::endl;
     else if(errnum == 8)
         std::cout << "Error: variable doesn't have a value." << std::endl;
+    else if(errnum == 9)
+        std::cout << "Error: you can't subtract strings." << std::endl;
     std::cout << "Error at line: " << line << std::endl;
 
     throw std::runtime_error("Error");
