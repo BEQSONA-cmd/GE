@@ -8,15 +8,15 @@
 #include "Hash_Map.hpp"
 
 // functions
-const std::string FUNC_PRINT = "ბეჭდვა";
-const std::string FUNC_INPUT = "შეყვანა";
-const std::string FUNC_IF = "თუ";
-const std::string FUNC_FUNCTION = "ფუნქცია";
+const std::string FUNC_PRINT = "print";
+const std::string FUNC_INPUT = "input";
+const std::string FUNC_IF = "if";
+const std::string FUNC_FUNCTION = "function";
 
 // data types
-const std::string STRING = "ფრაზა";
-const std::string INT = "რიცხვი";
-const std::string FUNC = "ფუნქცია";
+const std::string STRING = "string";
+const std::string INT = "int";
+const std::string FUNC = "function";
 
 // parser will parse the code and create a hash map
 class Parser
@@ -27,19 +27,26 @@ class Parser
         Hash_Map *variables;
     public:
         Parser(std::vector<std::string> lines);
-        void parse();
+        bool parse();
 
-        void check_instruction(std::string line);
+        bool check_instruction(std::string line);
         void print_instructions();
         Hash_Map *get_instructions();
 
-        void check_variable(std::string line);
+        bool check_variable(std::string line);
         void print_variables();
 
         ~Parser();
 };
 
 std::string get_next_string(std::string line, std::string string);
+std::string get_first_string(std::string line);
 std::string get_value_string(std::string line);
+bool is_str_in_str(std::string line, std::string string);
+std::vector<std::string> get_all_string_space(std::string line);
+std::vector<std::string> get_all_string_func(std::string line);
+size_t string_count(std::string line);
+bool ft_strcmp(std::string str1, std::string str2);
+bool is_char(char c);
 
 #endif

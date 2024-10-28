@@ -35,69 +35,89 @@ Parser::~Parser()
     delete this->variables;
 }
 
-void Parser::check_instruction(std::string line)
+bool Parser::check_instruction(std::string line)
 {
     size_t i = 0;
+
+    std::string value = "";
+    std::string func = "";
+
     if(line.find(FUNC_PRINT) != std::string::npos)
     {
-        std::string value = "";
+        if(!is_str_in_str(line, FUNC_PRINT))
+            return false;
         i = line.find(FUNC_PRINT) + FUNC_PRINT.length();
-        while(line[i] != '"')
-        {
+        func = FUNC_PRINT;
+        while(line[i] != '(')
             i++;
-        }
         i++;
-        while(line[i] != '"')
-        {
-            value += line[i];
-            i++;
-        }
-        this->instructions->insert(FUNC_PRINT, value, Type::T_FUNC);
     }
     else if(line.find(FUNC_INPUT) != std::string::npos)
     {
-        std::string value = "";
+        if(!is_str_in_str(line, FUNC_INPUT))
+            return false;
         i = line.find(FUNC_INPUT) + FUNC_INPUT.length();
-        while(line[i] != '"')
-        {
+        func = FUNC_INPUT;
+        while(line[i] != '(')
             i++;
-        }
+        i++;
+    }
+    else
+        return true;
+    
+    if(line[i] == '"')
+    {
+        while(line[i] != '"')
+            i++;
         i++;
         while(line[i] != '"')
         {
             value += line[i];
             i++;
         }
-        this->instructions->insert(FUNC_INPUT, value, Type::T_FUNC);
     }
+    else
+    {
+        std::string key = "";
+        while(is_char(line[i]) && line[i] != ')')
+        {
+            key += line[i];
+            i++;
+        }
+        value = this->variables->get(key);
+    }
+    this->instructions->insert(func, value, Type::T_FUNC);
+    return true;
 }
 
-void Parser::check_variable(std::string line)
+bool Parser::check_variable(std::string line)
 {
     if(line.find(STRING) != std::string::npos)
     {
+        if(!ft_strcmp(get_first_string(line) , STRING))
+            return true;
+        if(string_count(line) != 4)
+            return false;
         if(line.find('=') == std::string::npos)
-        {
-            std::cout << "Error: Syntax error" << std::endl;
-            return;
-        }
+            return false;
 
         std::string key = "";
         std::string value = "";
 
         key = get_next_string(line, STRING);
         value = get_value_string(line);
+        if(value == "")
+            return false;
         this->variables->insert(key, value, Type::T_STRING);
-
-
     }
     else if(line.find(INT) != std::string::npos)
     {
+        if(!ft_strcmp(get_first_string(line) , INT))
+            return true;
+        if(string_count(line) != 4)
+            return false;
         if(line.find('=') == std::string::npos)
-        {
-            std::cout << "Error: Syntax error" << std::endl;
-            return;
-        }
+            return false;
         std::string key = "";
         std::string value = "";
 
@@ -105,18 +125,30 @@ void Parser::check_variable(std::string line)
         value = get_next_string(line, "=");
         this->variables->insert(key, value, Type::T_INT);
     }
+    return true;
 }
 
-void Parser::parse()
+bool Parser::parse()
 {
     size_t i = 0;
     while(i < this->lines.size())
     {
         std::string line = this->lines[i];
-        check_instruction(line);
-        check_variable(line);
+        if(!check_variable(line))
+        {
+            std::cout << "Error: Syntax error" << std::endl;
+            std::cout << line << std::endl;
+            return false;
+        }
+        if(!check_instruction(line))
+        {
+            std::cout << "Error: Syntax error" << std::endl;
+            std::cout << line << std::endl;
+            return false;
+        }
         i++;
     }
+    return true;
 }
 
 void Parser::print_instructions()
