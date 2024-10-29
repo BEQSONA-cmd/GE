@@ -38,17 +38,14 @@ const std::string LESS_EQUAL = "<=";
 // parser will parse the code and create a hash map
 class Parser
 {
-    private:
+    protected:
         std::vector<std::string> lines;
         Hash_Map *instructions;
         Hash_Map *variables;
-        Hash_Map *functions;
     public:
         Parser(std::vector<std::string> lines);
         void parse();
         void parse_variables(std::vector<std::string> words, std::string line);
-        void parse_functions(std::vector<std::string> words, std::string line, size_t *iter);
-        ~Parser();
 
         void check_instruction(std::string line);
         void print_instructions();
@@ -64,6 +61,15 @@ class Parser
 
         void print_variables();
 };
+
+class Object : public Parser
+{
+    private:
+        std::string name;
+    public:
+        Object(std::vector<std::string> lines, size_t *iter);
+};
+
 
 std::string get_previous_string(std::string line, std::string string);
 std::string get_value_string(std::string line, Hash_Map *variables);

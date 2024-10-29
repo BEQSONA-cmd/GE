@@ -2,8 +2,14 @@
 
 function func()
 {
-    int i = 15
-    print(i)
+    int i
+
+    i = -2
+
+    int  j = 16
+
+    j += i
+
+    print(j)   
 }
 
-func()

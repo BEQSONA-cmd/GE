@@ -33,6 +33,30 @@ std::vector<std::string> get_all_lines(char **av)
     return lines;
 }
 
+bool parsing(std::vector<std::string> lines, std::vector<Object> &objects)
+{
+    size_t i = 0;
+    while (i < lines.size())
+    {
+        std::string line = lines[i];
+        std::vector<std::string> words = ft_split(line, ' ');
+
+        if (words.size() == 0)
+        {
+            i++;
+            continue;
+        }
+
+        if (words[0] == FUNC)
+        {
+            Object object(lines, &i);
+            objects.push_back(object);
+        }
+        i++;
+    }
+    return 0;
+}
+
 int main(int ac, char** av) 
 {
     if (ac < 2) 
@@ -44,24 +68,12 @@ int main(int ac, char** av)
         return 1;
     std::vector<std::string> Lines = get_all_lines(av);
 
-    // size_t i = 0;
-    // while(i < Lines.size())
-    // {
-    //     std::cout << Lines[i] << std::endl;
-    //     i++;
-    // }
+    std::vector<Object> objects;
 
-    Parser parser(Lines);
-    try
-    {
-        parser.parse();
-    }
-    catch(const std::exception& e)
-    {
+    if(parsing(Lines, objects))
         return 1;
-    }
 
-    Excecuter excecuter(parser.get_instructions());
+    Excecuter excecuter(objects[0].get_instructions());
     excecuter.execute();
     
     return 0;

@@ -21,7 +21,6 @@ struct Hash_Map_Enter
     std::string key;
     std::string value;
 
-    std::vector<std::string> object;
     Type type;
 
     Hash_Map_Enter *next;
@@ -33,15 +32,11 @@ class Hash_Map
         Hash_Map_Enter *head;
 
         Hash_Map();
-
-        // variables
+        ~Hash_Map();
+        
         void insert(std::string key, std::string value, Type type);
         void replace(std::string key, std::string value);
         std::string get(std::string key);
-        // functions
-        void insert(std::string key, std::vector<std::string> object, Type type);
-        void replace(std::string key, std::vector<std::string> object);
-        std::vector<std::string> get_function(std::string key);
 
         Type get_type(std::string key);
 };

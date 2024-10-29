@@ -2,22 +2,23 @@ NAME = ge
 CC = c++
 
 FLAGS = -Wall -Werror -Wextra -g
-# FLAGS += -fsanitize=addresse
-
+# FLAGS += -fsanitize=address
 SRC = $(wildcard **/**.cpp) $(wildcard *.cpp)
 
-OBJ = $(SRC:.cpp=.o)
+OBJ_DIR = .obj
+OBJ = $(addprefix $(OBJ_DIR)/, $(SRC:.cpp=.o))
 
 all: $(NAME)
 
 $(NAME): $(OBJ)
 	$(CC) $(FLAGS) $(OBJ) -o $(NAME)
 
-%.o: %.cpp
+$(OBJ_DIR)/%.o: %.cpp
+	@mkdir -p $(dir $@)
 	$(CC) $(FLAGS) -c $< -o $@
 
 clean:
-	rm -rf $(OBJ)
+	rm -rf $(OBJ_DIR)
 
 fclean: clean
 	rm -rf $(NAME)

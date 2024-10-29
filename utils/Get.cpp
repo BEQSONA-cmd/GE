@@ -136,15 +136,11 @@ std::string get_next_string(std::string line, std::string string)
     }
     else
     {
-        while(line[i] != string[0])
-            i++;
-        while(line[i] == string[i])
-            i++;
-        while(line[i] == ' ' || line[i] == '\t')
-            i++;
-        while(is_char(line[i]))
+        std::vector<std::string> strings = get_all_string_space(line);
+        while(i < strings.size())
         {
-            next_string += line[i];
+            if(ft_strcmp(strings[i], string))
+                return strings[i + 1];
             i++;
         }
     }
