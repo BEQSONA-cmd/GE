@@ -10,6 +10,7 @@ Parser::Parser(std::vector<std::string> lines)
     this->lines = lines;
     this->instructions = new Hash_Map();
     this->variables = new Hash_Map();
+    this->functions = new Hash_Map();
 }
 
 Parser::~Parser()
@@ -32,8 +33,16 @@ Parser::~Parser()
         delete current;
         current = next;
     }
-
     delete this->variables;
+    current = this->functions->head;
+
+    while (current != NULL)
+    {
+        next = current->next;
+        delete current;
+        current = next;
+    }
+    delete this->functions;
 }
 
 void Parser::parse_variables(std::vector<std::string> words, std::string line)
@@ -79,23 +88,25 @@ void Parser::parse_variables(std::vector<std::string> words, std::string line)
 
 void Parser::parse()
 {
-    size_t i = 0;
-    while(i < this->lines.size())
+    size_t iter = 0;
+    while(iter < this->lines.size())
     {
-        std::string line = this->lines[i];
+        std::string line = this->lines[iter];
         if(!is_two_qoute(line))
             ft_error(line, 1);
         
-        std::vector<std::string> words = get_all_string_space(this->lines[i]);
+        std::vector<std::string> words = get_all_string_space(this->lines[iter]);
         if(words.size() == 0)
         {
-            i++;
+            iter++;
             continue;
         }
         parse_variables(words, line);
+        parse_functions(words, line, &iter);
+        
 
         check_instruction(line);
-        i++;
+        iter++;
     }
 }
 

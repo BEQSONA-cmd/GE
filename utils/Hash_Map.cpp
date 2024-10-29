@@ -5,6 +5,44 @@ Hash_Map::Hash_Map()
     this->head = NULL;
 }
 
+void Hash_Map::insert(std::string key, std::vector<std::string> object, Type type)
+{
+    Hash_Map_Enter *new_enter = new Hash_Map_Enter();
+    new_enter->key = key;
+    new_enter->object = object;
+    new_enter->type = type;
+    new_enter->value = "";
+    new_enter->next = this->head;
+    this->head = new_enter;
+}
+
+void Hash_Map::replace(std::string key, std::vector<std::string> object)
+{
+    Hash_Map_Enter *current = this->head;
+    while (current != NULL)
+    {
+        if (current->key == key)
+        {
+            current->object = object;
+            return;
+        }
+        current = current->next;
+    }
+}
+
+std::vector<std::string> Hash_Map::get_function(std::string key)
+{
+    Hash_Map_Enter *current = this->head;
+    while (current != NULL)
+    {
+        if (current->key == key)
+            return current->object;
+        current = current->next;
+    }
+    return std::vector<std::string>();
+}
+
+
 void Hash_Map::replace(std::string key, std::string value)
 {
     Hash_Map_Enter *current = this->head;

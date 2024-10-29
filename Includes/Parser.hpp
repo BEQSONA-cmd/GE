@@ -12,6 +12,7 @@
 const std::string FUNC_PRINT = "print";
 const std::string FUNC_INPUT = "input";
 const std::string FUNC_IF = "if";
+const std::string FUNC_WHILE = "while";
 const std::string FUNC_FUNCTION = "function";
 
 // data types
@@ -41,10 +42,12 @@ class Parser
         std::vector<std::string> lines;
         Hash_Map *instructions;
         Hash_Map *variables;
+        Hash_Map *functions;
     public:
         Parser(std::vector<std::string> lines);
         void parse();
         void parse_variables(std::vector<std::string> words, std::string line);
+        void parse_functions(std::vector<std::string> words, std::string line, size_t *iter);
         ~Parser();
 
         void check_instruction(std::string line);

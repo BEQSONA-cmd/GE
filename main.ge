@@ -1,10 +1,9 @@
 
 
-int i = 5
-
-if(i < 10)
+function func()
 {
+    int i = 15
     print(i)
 }
 
-print(i)
+func()

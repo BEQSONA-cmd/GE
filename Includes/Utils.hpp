@@ -10,5 +10,10 @@
 class Parser;
 
 void ft_error(std::string line, int errnum);
+std::vector<std::string> ft_split(const std::string &a, char c);
+bool is_char(char c);
+bool is_digit(char c);
+size_t ft_atoi(std::string str);
+bool ft_strcmp(std::string str1, std::string str2);
 
 #endif
