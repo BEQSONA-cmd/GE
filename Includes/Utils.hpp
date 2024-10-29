@@ -15,5 +15,6 @@ bool is_char(char c);
 bool is_digit(char c);
 size_t ft_atoi(std::string str);
 bool ft_strcmp(std::string str1, std::string str2);
+std::string ft_trim(std::string str);
 
 #endif

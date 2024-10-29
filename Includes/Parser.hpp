@@ -5,6 +5,7 @@
 #include <fstream>
 #include <string>
 #include <vector>
+#include <map>
 #include "Hash_Map.hpp"
 #include "Utils.hpp"
 
@@ -64,9 +65,8 @@ class Parser
 
 class Object : public Parser
 {
-    private:
-        std::string name;
     public:
+        Object() : Parser(std::vector<std::string>()) {}
         Object(std::vector<std::string> lines, size_t *iter);
 };
 

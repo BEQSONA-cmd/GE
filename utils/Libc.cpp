@@ -7,6 +7,33 @@ bool is_char(char c)
     return false;
 }
 
+// it will trim the string and return the trimmed string
+// '   hello   ' -> 'hello'
+
+std::string ft_trim(std::string str)
+{
+    size_t i = 0;
+    std::string res = "";
+
+    while(i < str.length() && !is_char(str[i]))
+        i++;
+
+    while(i < str.length())
+    {
+        res += str[i];
+        i++;
+    }
+
+    i = res.length() - 1;
+    while(i > 0 && !is_char(res[i]))
+    {
+        res.pop_back();
+        i--;
+    }   
+
+    return res;
+}
+
 bool is_digit(char c)
 {
     if(c >= '0' && c <= '9')
@@ -84,7 +111,9 @@ bool ft_strcmp(std::string str1, std::string str2)
     while(i < str1.length())
     {
         if(str1[i] != str2[i])
+        {
             return false;
+        }
         i++;
     }
     return true;

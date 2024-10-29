@@ -1,5 +1,6 @@
 #include "Includes/Parser.hpp"
 #include "Includes/Executer.hpp"
+#include "Includes/Utils.hpp"
 #include <vector>
 
 bool check_source_file(char **av)
@@ -33,7 +34,7 @@ std::vector<std::string> get_all_lines(char **av)
     return lines;
 }
 
-bool parsing(std::vector<std::string> lines, std::vector<Object> &objects)
+bool parsing(const std::vector<std::string>& lines, std::map<std::string, Object>& objects)
 {
     size_t i = 0;
     while (i < lines.size())
@@ -47,14 +48,15 @@ bool parsing(std::vector<std::string> lines, std::vector<Object> &objects)
             continue;
         }
 
-        if (words[0] == FUNC)
+        if (words[0] == FUNC && words.size() > 1)
         {
+            std::string key = ft_trim(words[1]);
             Object object(lines, &i);
-            objects.push_back(object);
+            objects[key] = object;
         }
         i++;
     }
-    return 0;
+    return false;
 }
 
 int main(int ac, char** av) 
@@ -64,17 +66,28 @@ int main(int ac, char** av)
         std::cout << "Usage: " << av[0] << " <source-file.ge>" << std::endl;
         return 1;
     }
-    if(!check_source_file(av))
-        return 1;
-    std::vector<std::string> Lines = get_all_lines(av);
-
-    std::vector<Object> objects;
-
-    if(parsing(Lines, objects))
+    if (!check_source_file(av))
         return 1;
 
-    Excecuter excecuter(objects[0].get_instructions());
-    excecuter.execute();
+    std::vector<std::string> lines = get_all_lines(av);
+
+    std::map<std::string, Object> objects;
+
+    if (parsing(lines, objects))
+        return 1;
+
+
+    auto it = objects.find("func()");
+    if (it == objects.end()) {
+        std::cerr << "Error: key 'func()' not found in objects" << std::endl;
+        return 1;
+    }
+
+    Object object = it->second;
+
+    Excecuter executer(object.get_instructions());
     
+    executer.execute();
+
     return 0;
 }
