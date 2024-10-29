@@ -78,10 +78,8 @@ int main(int ac, char** av)
 
 
     auto it = objects.find("func()");
-    if (it == objects.end()) {
-        std::cerr << "Error: key 'func()' not found in objects" << std::endl;
+    if (it == objects.end())
         return 1;
-    }
 
     Object object = it->second;
 
