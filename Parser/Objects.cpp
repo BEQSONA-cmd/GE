@@ -1,6 +1,6 @@
 #include "../Includes/Parser.hpp"
 
-Object::Object(std::vector<std::string> lines, size_t *iter, std::map<std::string, Object> functions) : Parser(lines)
+Object::Object(std::vector<std::string> lines, size_t *iter) : Parser(lines)
 {
     size_t i = *iter;
     // size_t save = i;
@@ -20,7 +20,7 @@ Object::Object(std::vector<std::string> lines, size_t *iter, std::map<std::strin
     this->lines = obj_lines;
     try 
     {
-        this->parse(functions);
+        this->parse();
     } 
     catch (std::exception &e) 
     {

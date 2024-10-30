@@ -1,31 +1,8 @@
 #include "../Includes/Parser.hpp"
 
-
-        // if(is_func_call(lines[i]))
-        // {
-        //     std::string func_name = get_first_string(lines[i]);
-        //     if (functions.find(func_name) != functions.end())
-        //     {
-        //         Object obj = functions[func_name];
-        //         Hash_Map *func_instructions = obj.get_instructions();
-                
-        //         while(func_instructions->head != NULL)
-        //         {
-        //             std::string key = func_instructions->head->key;
-        //             std::string value = func_instructions->head->value;
-        //             Type type = func_instructions->head->type;
-
-        //             this->instructions->insert(key, value, type);
-
-        //             func_instructions->head = func_instructions->head->next;
-        //         }
-        //     }
-        // }
-
-void Parser::check_instruction(std::string line, std::map<std::string, Object> funcs)
+void Parser::check_instruction(std::string line)
 {
     size_t i = 0;
-    (void)funcs;
     bool skip = false;
 
     std::string value = "";

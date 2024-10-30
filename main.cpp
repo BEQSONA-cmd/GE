@@ -51,7 +51,7 @@ bool parsing(const std::vector<std::string>& lines, std::map<std::string, Object
         if (words[0] == FUNC && words.size() > 1)
         {
             std::string key = ft_trim(words[1]);
-            Object object(lines, &i, objects);
+            Object object(lines, &i);
             objects[key] = object;
         }
         i++;

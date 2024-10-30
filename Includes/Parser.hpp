@@ -45,16 +45,15 @@ class Object;
 class Parser
 {
     protected:
-        std::map<std::string, Object> functions;
         std::vector<std::string> lines;
         Hash_Map *instructions;
         Hash_Map *variables;
     public:
         Parser(std::vector<std::string> lines);
-        void parse(std::map<std::string, Object> funcs);
+        void parse();
         void parse_variables(std::vector<std::string> words, std::string line);
 
-        void check_instruction(std::string line, std::map<std::string, Object> funcs);
+        void check_instruction(std::string line);
         void print_instructions();
         Hash_Map *get_instructions();
 
@@ -73,7 +72,7 @@ class Object : public Parser
 {
     public:
         Object() : Parser(std::vector<std::string>()) {}
-        Object(std::vector<std::string> lines, size_t *iter, std::map<std::string, Object> functions);
+        Object(std::vector<std::string> lines, size_t *iter);
 };
 
 

@@ -12,5 +12,4 @@ function func2()
 
     print(i)
     func1()
-    func2()
 }
