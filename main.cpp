@@ -59,6 +59,16 @@ bool parsing(const std::vector<std::string>& lines, std::map<std::string, Object
     return false;
 }
 
+void free_hash_map(std::map<std::string, Object>& objects)
+{
+    for (auto it = objects.begin(); it != objects.end(); it++)
+    {
+        Object object = it->second;
+        delete object.get_instructions();
+        delete object.get_variables();
+    }
+}
+
 int main(int ac, char** av) 
 {
     if (ac < 2) 
@@ -85,6 +95,7 @@ int main(int ac, char** av)
     Excecuter executer(objects);
     
     executer.execute(object.get_instructions());
+    free_hash_map(objects);
 
     return 0;
 }

@@ -3,6 +3,7 @@ CC = c++
 
 FLAGS = -Wall -Werror -Wextra -g
 # FLAGS += -fsanitize=address
+
 SRC = $(wildcard **/**.cpp) $(wildcard *.cpp)
 
 OBJ_DIR = .obj

@@ -11,5 +11,7 @@ function func2()
     int i = 15
 
     print(i)
+
     func1()
+    func2()
 }

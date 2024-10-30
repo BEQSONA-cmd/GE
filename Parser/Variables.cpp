@@ -1,6 +1,6 @@
 #include "../Includes/Parser.hpp"
 
-void Parser::assign_string(std::string line)
+void Object::assign_string(std::string line)
 {
     std::string value = "";
     value = get_value_string(line, variables);
@@ -13,7 +13,7 @@ void Parser::assign_string(std::string line)
     variables->replace(key, value);
 }
 
-void Parser::append_string(std::string line)
+void Object::append_string(std::string line)
 {
     std::string value = "";
     value = get_value_string(line, variables);
@@ -26,7 +26,7 @@ void Parser::append_string(std::string line)
     variables->replace(key, new_value);
 }
 
-void Parser::assign_int(std::string line)
+void Object::assign_int(std::string line)
 {
     std::string value = "";
     value = get_value_int(line, variables);
@@ -38,7 +38,7 @@ void Parser::assign_int(std::string line)
     variables->replace(key, value);
 }
 
-void Parser::add_int(std::string line)
+void Object::add_int(std::string line)
 {
     std::string value = "";
     value = get_value_int(line, variables);
@@ -51,7 +51,7 @@ void Parser::add_int(std::string line)
     variables->replace(key, std::to_string(new_value));
 }
 
-void Parser::sub_int(std::string line)
+void Object::sub_int(std::string line)
 {
     std::string value = "";
     value = get_value_int(line, variables);
@@ -64,7 +64,7 @@ void Parser::sub_int(std::string line)
     variables->replace(key, std::to_string(new_value));
 }
 
-void Parser::create_variable(std::string line)
+void Object::create_variable(std::string line)
 {
     if(line.find(STRING) != std::string::npos)
     {

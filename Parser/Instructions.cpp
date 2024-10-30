@@ -1,6 +1,37 @@
 #include "../Includes/Parser.hpp"
 
-void Parser::check_instruction(std::string line)
+std::string Object::value_check(std::string line ,size_t i)
+{
+    std::string value = "";
+
+    if(line[i] == '"')
+    {
+        while(line[i] != '"')
+            i++;
+        i++;
+        while(line[i] != '"')
+        {
+            value += line[i];
+            i++;
+        }
+    }
+    else
+    {
+        std::string key = "";
+        while(is_char(line[i]) && line[i] != ')')
+        {
+            key += line[i];
+            i++;
+        }
+        value = this->variables->get(key);
+    }
+    if(value == "")
+        ft_error(line, 8);
+
+    return value;
+}
+
+void Object::check_instruction(std::string line)
 {
     size_t i = 0;
     bool skip = false;
@@ -37,29 +68,8 @@ void Parser::check_instruction(std::string line)
     }
     else
         return;
-    
-    if(line[i] == '"' && !skip)
-    {
-        while(line[i] != '"')
-            i++;
-        i++;
-        while(line[i] != '"')
-        {
-            value += line[i];
-            i++;
-        }
-    }
-    else if(!skip)
-    {
-        std::string key = "";
-        while(is_char(line[i]) && line[i] != ')')
-        {
-            key += line[i];
-            i++;
-        }
-        value = this->variables->get(key);
-    }
-    if(value == "")
-        ft_error(line, 8);
+
+    if(!skip)
+        value = value_check(line, i);
     this->instructions->insert(func, value, Type::T_FUNC);
 }

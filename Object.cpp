@@ -1,18 +1,50 @@
 #include "Includes/Parser.hpp"
 
-Hash_Map *Parser::get_instructions()
+Hash_Map *Object::get_instructions()
 {
     return this->instructions;
 }
 
-Parser::Parser(std::vector<std::string> lines)
+Hash_Map *Object::get_variables()
+{
+    return this->variables;
+}
+
+Object::Object(std::vector<std::string> lines, size_t *iter)
 {
     this->lines = lines;
     this->instructions = new Hash_Map();
     this->variables = new Hash_Map();
+
+    size_t i = *iter;
+
+    std::vector<std::string> obj_lines;
+
+    if (lines[i] != "{")
+        i++;
+
+    while (i < lines.size() && get_first_string(lines[i]) != "}")
+    {
+        obj_lines.push_back(lines[i]);
+        i++;
+    }
+
+    *iter = i;
+    this->lines = obj_lines;
+    try 
+    {
+        this->parse();
+    } 
+    catch (std::exception &e) 
+    {
+        std::cerr << e.what() << std::endl;
+    }
+
+    // this->print_instructions();
+    // this->print_variables();
 }
 
-void Parser::parse_variables(std::vector<std::string> words, std::string line)
+void Object::parse_variables(std::vector<std::string> words, std::string line)
 {
     if(words[0] == STRING || words[0] == INT)
         this->create_variable(line);
@@ -53,7 +85,7 @@ void Parser::parse_variables(std::vector<std::string> words, std::string line)
     }
 }
 
-void Parser::parse()
+void Object::parse()
 {
     size_t iter = 0;
 

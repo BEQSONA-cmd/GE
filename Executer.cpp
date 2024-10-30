@@ -5,6 +5,7 @@ Excecuter::Excecuter(std::map<std::string, Object> functions)
     this->functions = functions;
 }
 
+
 void Excecuter::execute(Hash_Map *instructions)
 {
     Hash_Map_Enter *current = instructions->head;
@@ -51,7 +52,6 @@ void Excecuter::call_function(std::string value)
     {
         Object obj = this->functions[value];
         Hash_Map *func_instructions = obj.get_instructions();
-        
         execute(func_instructions);
     }
 }

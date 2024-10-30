@@ -70,7 +70,7 @@ size_t string_count(std::string line)
     return count;
 }
 
-void Parser::print_instructions()
+void Object::print_instructions()
 {
     Hash_Map_Enter *current = this->instructions->head;
     int iter = 0;
@@ -86,7 +86,7 @@ void Parser::print_instructions()
     }
 }
 
-void Parser::print_variables()
+void Object::print_variables()
 {
     Hash_Map_Enter *current = this->variables->head;
     int iter = 0;

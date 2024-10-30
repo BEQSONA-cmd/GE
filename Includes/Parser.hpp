@@ -39,23 +39,25 @@ const std::string LESS = "<";
 const std::string GREATER_EQUAL = ">=";
 const std::string LESS_EQUAL = "<=";
 
-class Object;
-
 // parser will parse the code and create a hash map
-class Parser
+class Object
 {
     protected:
         std::vector<std::string> lines;
         Hash_Map *instructions;
         Hash_Map *variables;
     public:
-        Parser(std::vector<std::string> lines);
+        Object() {};
+        Object(std::vector<std::string> lines, size_t *iter);
+
         void parse();
         void parse_variables(std::vector<std::string> words, std::string line);
 
+        std::string value_check(std::string line ,size_t i);
         void check_instruction(std::string line);
         void print_instructions();
         Hash_Map *get_instructions();
+        Hash_Map *get_variables();
 
         void create_variable(std::string line);
         void assign_string(std::string line);
@@ -67,14 +69,6 @@ class Parser
 
         void print_variables();
 };
-
-class Object : public Parser
-{
-    public:
-        Object() : Parser(std::vector<std::string>()) {}
-        Object(std::vector<std::string> lines, size_t *iter);
-};
-
 
 std::string get_previous_string(std::string line, std::string string);
 std::string get_value_string(std::string line, Hash_Map *variables);
