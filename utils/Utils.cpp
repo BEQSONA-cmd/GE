@@ -24,3 +24,13 @@ void ft_error(std::string line, int errnum)
 
     throw std::runtime_error("Error");
 }
+
+void free_hash_map(std::map<std::string, Object>& objects)
+{
+    for (auto it = objects.begin(); it != objects.end(); it++)
+    {
+        Object object = it->second;
+        delete object.get_instructions();
+        delete object.get_variables();
+    }
+}

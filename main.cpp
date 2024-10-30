@@ -34,9 +34,21 @@ std::vector<std::string> get_all_lines(char **av)
     return lines;
 }
 
-bool parsing(const std::vector<std::string>& lines, std::map<std::string, Object>& objects)
+Object parsing(std::vector<std::string> lines, std::map<std::string, Object> &objects)
 {
     size_t i = 0;
+
+    Object main_object = Object(lines, &i);
+
+    try
+    {
+        main_object.parse();
+    }
+    catch (std::exception &e)
+    {
+        std::cerr << e.what() << std::endl;
+    }
+
     while (i < lines.size())
     {
         std::string line = lines[i];
@@ -56,17 +68,7 @@ bool parsing(const std::vector<std::string>& lines, std::map<std::string, Object
         }
         i++;
     }
-    return false;
-}
-
-void free_hash_map(std::map<std::string, Object>& objects)
-{
-    for (auto it = objects.begin(); it != objects.end(); it++)
-    {
-        Object object = it->second;
-        delete object.get_instructions();
-        delete object.get_variables();
-    }
+    return main_object;
 }
 
 int main(int ac, char** av) 
@@ -80,21 +82,12 @@ int main(int ac, char** av)
         return 1;
 
     std::vector<std::string> lines = get_all_lines(av);
-
     std::map<std::string, Object> objects;
 
-    if (parsing(lines, objects))
-        return 1;
-
-    auto it = objects.find("func1()");
-    if (it == objects.end())
-        return 1;
-
-    Object object = it->second;
+    Object main_object = parsing(lines, objects);
 
     Excecuter executer(objects);
-    
-    executer.execute(object.get_instructions());
+    executer.execute(main_object.get_instructions());
     free_hash_map(objects);
 
     return 0;

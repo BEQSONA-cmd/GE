@@ -16,7 +16,6 @@ function func2()
     print("Hello World")
 }
 
-
 function func1()
 {
 

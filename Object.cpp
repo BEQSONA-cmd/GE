@@ -94,8 +94,16 @@ void Object::parse()
         std::string line = this->lines[iter];
         if(!is_two_qoute(line))
             ft_error(line, 1);
-        
+
         std::vector<std::string> words = get_all_string_space(this->lines[iter]);
+
+        if(get_first_string(line) == FUNC)
+        {
+            // while its not } we will keep parsing
+            while(get_first_string(line) != "}")
+                iter++;
+        }
+        
         if(words.size() == 0)
         {
             iter++;
