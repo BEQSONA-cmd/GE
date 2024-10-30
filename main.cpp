@@ -86,7 +86,7 @@ int main(int ac, char** av)
     if (parsing(lines, objects))
         return 1;
 
-    auto it = objects.find("func2()");
+    auto it = objects.find("func1()");
     if (it == objects.end())
         return 1;
 

@@ -1,18 +1,33 @@
 
 
-function func1()
+function pr_something()
 {
-    print("hello word")
-}
+    string something = "Hello World"
 
+    string add = " and hello friends"
+
+    something += add 
+
+    print(something)
+}
 
 function func2()
 {
+    print("Hello World")
+}
+
+
+function func1()
+{
+
     int i = 15
+    
+    i += 7 
 
     print(i)
-    print("hello World")
+    pr_something()
 
-    func1()
-
+    func2()
 }
+
+func1()

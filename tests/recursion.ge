@@ -1,0 +1,57 @@
+
+
+function func2()
+{
+    print("func2")
+    func2()
+}
+
+function func3()
+{
+    print("func3")
+    func1()
+}
+
+function func4()
+{
+    print("func4")
+    func3()
+}
+
+function func5()
+{
+    print("func5")
+    func4()
+}
+
+function func6()
+{
+    print("func6")
+    func5()
+}
+
+function func7()
+{
+    print("func7")
+    func6()
+}
+
+function func8()
+{
+    print("func8")
+    func7()
+}
+
+function func9()
+{
+    print("func9")
+    func8()
+}
+
+function func1()
+{
+    print("func1")
+    func9()
+}
+
+func1()
