@@ -51,7 +51,7 @@ bool parsing(const std::vector<std::string>& lines, std::map<std::string, Object
         if (words[0] == FUNC && words.size() > 1)
         {
             std::string key = ft_trim(words[1]);
-            Object object(lines, &i);
+            Object object(lines, &i, objects);
             objects[key] = object;
         }
         i++;
@@ -76,16 +76,15 @@ int main(int ac, char** av)
     if (parsing(lines, objects))
         return 1;
 
-
-    auto it = objects.find("func()");
+    auto it = objects.find("func2()");
     if (it == objects.end())
         return 1;
 
     Object object = it->second;
 
-    Excecuter executer(object.get_instructions());
+    Excecuter executer(objects);
     
-    executer.execute();
+    executer.execute(object.get_instructions());
 
     return 0;
 }

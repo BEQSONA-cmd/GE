@@ -1,8 +1,32 @@
 #include "../Includes/Parser.hpp"
 
-void Parser::check_instruction(std::string line)
+
+        // if(is_func_call(lines[i]))
+        // {
+        //     std::string func_name = get_first_string(lines[i]);
+        //     if (functions.find(func_name) != functions.end())
+        //     {
+        //         Object obj = functions[func_name];
+        //         Hash_Map *func_instructions = obj.get_instructions();
+                
+        //         while(func_instructions->head != NULL)
+        //         {
+        //             std::string key = func_instructions->head->key;
+        //             std::string value = func_instructions->head->value;
+        //             Type type = func_instructions->head->type;
+
+        //             this->instructions->insert(key, value, type);
+
+        //             func_instructions->head = func_instructions->head->next;
+        //         }
+        //     }
+        // }
+
+void Parser::check_instruction(std::string line, std::map<std::string, Object> funcs)
 {
     size_t i = 0;
+    (void)funcs;
+    bool skip = false;
 
     std::string value = "";
     std::string func = "";
@@ -27,10 +51,17 @@ void Parser::check_instruction(std::string line)
             i++;
         i++;
     }
+    else if (is_func_call(line))
+    {
+        std::string func_name = get_first_string(line);
+        func = FUNC_CALL;
+        value = func_name;   
+        skip = true;
+    }
     else
         return;
     
-    if(line[i] == '"')
+    if(line[i] == '"' && !skip)
     {
         while(line[i] != '"')
             i++;
@@ -41,7 +72,7 @@ void Parser::check_instruction(std::string line)
             i++;
         }
     }
-    else
+    else if(!skip)
     {
         std::string key = "";
         while(is_char(line[i]) && line[i] != ')')

@@ -53,7 +53,7 @@ void Parser::parse_variables(std::vector<std::string> words, std::string line)
     }
 }
 
-void Parser::parse()
+void Parser::parse(std::map<std::string, Object> funcs)
 {
     size_t iter = 0;
 
@@ -70,7 +70,7 @@ void Parser::parse()
             continue;
         }
         parse_variables(words, line);
-        check_instruction(line);
+        check_instruction(line, funcs);
         iter++;
     }
 }

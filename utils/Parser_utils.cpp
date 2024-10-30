@@ -1,5 +1,27 @@
 #include "../Includes/Parser.hpp"
 
+bool is_func_call(std::string line)
+{
+    size_t i = 0;
+    size_t count = 0;
+
+    while(i < line.length())
+    {
+        if(line[i] == '(')
+            count++;
+        if(line[i] == ')')
+            count++;
+        i++;
+    }
+    if(count == 2)
+    {
+        if(is_str_in_str(line, FUNC))
+            return false;
+        return true;
+    }
+    return false;
+}
+
 bool is_two_qoute(std::string line)
 {
     size_t i = 0;

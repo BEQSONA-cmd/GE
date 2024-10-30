@@ -36,8 +36,9 @@ class Hash_Map
         
         void insert(std::string key, std::string value, Type type);
         void replace(std::string key, std::string value);
+        
         std::string get(std::string key);
-
+        std::string get_key(std::string value);
         Type get_type(std::string key);
 };
 

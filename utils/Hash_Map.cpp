@@ -56,6 +56,18 @@ std::string Hash_Map::get(std::string key)
     return "";
 }
 
+std::string Hash_Map::get_key(std::string value)
+{
+    Hash_Map_Enter *current = this->head;
+    while (current != NULL)
+    {
+        if (current->value == value)
+            return current->key;
+        current = current->next;
+    }
+    return "";
+}
+
 Type Hash_Map::get_type(std::string key)
 {
     Hash_Map_Enter *current = this->head;

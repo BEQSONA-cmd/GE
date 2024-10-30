@@ -1,15 +1,16 @@
 
 
-function func()
+function func1()
 {
-    int i
-
-    i = -2
-
-    int  j = 16
-
-    j += i
-
-    print(j)   
+    print("hello word")
 }
 
+
+function func2()
+{
+    int i = 15
+
+    print(i)
+    func1()
+    func2()
+}
