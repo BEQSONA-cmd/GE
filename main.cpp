@@ -37,17 +37,7 @@ std::vector<std::string> get_all_lines(char **av)
 Object parsing(std::vector<std::string> lines, std::map<std::string, Object> &objects)
 {
     size_t i = 0;
-
-    Object main_object = Object(lines, &i);
-
-    try
-    {
-        main_object.parse();
-    }
-    catch (std::exception &e)
-    {
-        std::cerr << e.what() << std::endl;
-    }
+    std::vector<std::string> main_lines;
 
     while (i < lines.size())
     {
@@ -63,11 +53,16 @@ Object parsing(std::vector<std::string> lines, std::map<std::string, Object> &ob
         if (words[0] == FUNC && words.size() > 1)
         {
             std::string key = ft_trim(words[1]);
-            Object object(lines, &i);
+            Object object(lines, &i , false);
             objects[key] = object;
         }
+        else
+            main_lines.push_back(line);
         i++;
     }
+
+    Object main_object = Object(main_lines, &i, true);
+
     return main_object;
 }
 

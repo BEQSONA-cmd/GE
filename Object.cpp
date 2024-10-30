@@ -10,27 +10,31 @@ Hash_Map *Object::get_variables()
     return this->variables;
 }
 
-Object::Object(std::vector<std::string> lines, size_t *iter)
+Object::Object(std::vector<std::string> lines, size_t *iter, bool main)
 {
     this->lines = lines;
     this->instructions = new Hash_Map();
     this->variables = new Hash_Map();
 
-    size_t i = *iter;
-
-    std::vector<std::string> obj_lines;
-
-    if (lines[i] != "{")
-        i++;
-
-    while (i < lines.size() && get_first_string(lines[i]) != "}")
+    if(!main)
     {
-        obj_lines.push_back(lines[i]);
-        i++;
-    }
+        size_t i = *iter;
 
-    *iter = i;
-    this->lines = obj_lines;
+        std::vector<std::string> obj_lines;
+
+        if (lines[i] != "{")
+            i++;
+
+        while (i < lines.size() && get_first_string(lines[i]) != "}")
+        {
+            obj_lines.push_back(lines[i]);
+            i++;
+        }
+
+        *iter = i;
+        this->lines = obj_lines;
+    }
+    
     try 
     {
         this->parse();
@@ -96,13 +100,6 @@ void Object::parse()
             ft_error(line, 1);
 
         std::vector<std::string> words = get_all_string_space(this->lines[iter]);
-
-        if(get_first_string(line) == FUNC)
-        {
-            // while its not } we will keep parsing
-            while(get_first_string(line) != "}")
-                iter++;
-        }
         
         if(words.size() == 0)
         {

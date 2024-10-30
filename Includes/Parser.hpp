@@ -48,7 +48,7 @@ class Object
         Hash_Map *variables;
     public:
         Object() {};
-        Object(std::vector<std::string> lines, size_t *iter);
+        Object(std::vector<std::string> lines, size_t *iter, bool main = false);
 
         void parse();
         void parse_variables(std::vector<std::string> words, std::string line);
