@@ -8,29 +8,21 @@ Excecuter::Excecuter(std::map<std::string, Object> functions)
 
 void Excecuter::execute(Hash_Map *instructions)
 {
-    Hash_Map_Enter *current = instructions->head;
-    std::stack<Hash_Map_Enter*> nodeStack;
-    
+
+    Hash_Map_Enter *current = instructions->tail;
+
     while (current != NULL)
     {
-        nodeStack.push(current);
-        current = current->next;
-    }
-
-    while (!nodeStack.empty())
-    {
-        current = nodeStack.top();
-        nodeStack.pop();
-
         if (current->key == FUNC_PRINT)
             print_function(current->value);
         else if (current->key == FUNC_INPUT)
             input_function(current->value);
         else if (current->key == FUNC_CALL)
             call_function(current->value);
+    
+        current = current->prev;
     }
 }
-
 
 // attributes:
 void Excecuter::print_function(std::string value)

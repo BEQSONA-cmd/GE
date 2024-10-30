@@ -11,7 +11,8 @@ function func2()
     int i = 15
 
     print(i)
+    print("hello World")
 
     func1()
-    func2()
+
 }

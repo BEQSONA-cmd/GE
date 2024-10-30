@@ -24,12 +24,14 @@ struct Hash_Map_Enter
     Type type;
 
     Hash_Map_Enter *next;
+    Hash_Map_Enter *prev;
 };
 
 class Hash_Map
 {
     public:
         Hash_Map_Enter *head;
+        Hash_Map_Enter *tail;
 
         Hash_Map();
         ~Hash_Map();

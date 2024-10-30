@@ -3,6 +3,7 @@
 Hash_Map::Hash_Map()
 {
     this->head = NULL;
+    this->tail = NULL;
 }
 
 Hash_Map::~Hash_Map()
@@ -17,6 +18,7 @@ Hash_Map::~Hash_Map()
         current = next;
     }
     this->head = NULL;
+    this->tail = NULL;
 }
 
 void Hash_Map::replace(std::string key, std::string value)
@@ -34,14 +36,25 @@ void Hash_Map::replace(std::string key, std::string value)
     }
 }
 
-void Hash_Map::insert(std::string key, std::string value , Type type)
+void Hash_Map::insert(std::string key, std::string value, Type type)
 {
     Hash_Map_Enter *new_enter = new Hash_Map_Enter();
     new_enter->key = key;
     new_enter->value = value;
     new_enter->type = type;
     new_enter->next = this->head;
-    this->head = new_enter;
+    new_enter->prev = NULL;
+
+    if (this->head == NULL)
+    {
+        this->head = new_enter;
+        this->tail = new_enter;
+    }
+    else
+    {
+        this->head->prev = new_enter;
+        this->head = new_enter;
+    }
 }
 
 std::string Hash_Map::get(std::string key)
