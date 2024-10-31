@@ -14,7 +14,7 @@ const std::string FUNC_PRINT = "print";
 const std::string FUNC_INPUT = "input";
 const std::string FUNC_CALL = "call";
 
-
+// statements
 const std::string IF = "if";
 const std::string ELSE = "else";
 const std::string WHILE = "while";

@@ -17,6 +17,8 @@ void Excecuter::execute(Hash_Map *instructions)
             input_function(current->value);
         else if (current->key == FUNC_CALL)
             call_function(current->value);
+        else if (current->key == WHILE)
+            while_loop(current->value);
     
         current = current->prev;
     }
@@ -44,5 +46,15 @@ void Excecuter::call_function(std::string value)
         Hash_Map *func_instructions = obj.get_instructions();
         std::this_thread::sleep_for(std::chrono::milliseconds(1));
         execute(func_instructions);
+    }
+}
+
+void Excecuter::while_loop(std::string value)
+{
+    
+    std::string condition = value;
+    while (condition == "true")
+    {
+        std::this_thread::sleep_for(std::chrono::milliseconds(1));
     }
 }

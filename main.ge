@@ -1,22 +1,15 @@
 
 
-function aqeb(){
-    string name = "Emanuel"
-    string status = "idiota"
-    name += " "
-    name += status
-    string test = "test: "
 
-    print("are you Emanuel")
-    
-    string answer = "yes"
+function main()
+{
+    int i = 15
 
-    if(answer == "yes"){
-        print(name)
-    }
-    else{
-        print("no")
+    while(i > 0)
+    {
+        i -= 1
+        print(i)
     }
 }
 
-aqeb()
+main()

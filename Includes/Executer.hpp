@@ -22,6 +22,7 @@ class Excecuter
         void print_function(std::string value);
         std::string input_function(std::string value);
         void call_function(std::string value);
+        void while_loop(std::string value);
 };
 
 

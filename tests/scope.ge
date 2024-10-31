@@ -20,6 +20,25 @@ function hi_emanuel(){
     }
 }
 
+function aqeb(){
+    string name = "Emanuel"
+    string status = "idiota"
+    name += " "
+    name += status
+    string test = "test: "
+
+    print("are you Emanuel")
+    
+    string answer = "yes"
+
+    if(answer == "yes"){
+        print(name)
+    }
+    else{
+        print("no")
+    }
+}
+
 function main()
 {
     print("this is program for testing types")
