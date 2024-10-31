@@ -4,7 +4,7 @@
     "patterns": [
       {
         "name": "keyword.control.ge",
-        "match": "\\b(function|while|if)\\b"
+        "match": "\\b(function|while|if|else)\\b"
       },
       {
         "name": "storage.type.ge",

@@ -8,7 +8,7 @@ Scope::Scope(std::vector<std::string> lines, size_t *iter)
 
     this->end = 0;
 
-    if (lines[i].find('{') != std::string::npos)
+    if (lines[i].find('{') == std::string::npos)
         i++;
 
     while (i < lines.size())

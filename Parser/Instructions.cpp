@@ -38,7 +38,6 @@ void Object::check_instruction(std::string line)
 
     std::string value = "";
     std::string func = "";
-
     if(line.find(FUNC_PRINT) != std::string::npos)
     {
         if(!is_str_in_str(line, FUNC_PRINT))

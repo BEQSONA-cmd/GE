@@ -18,12 +18,12 @@ Object::Object(std::vector<std::string> lines, size_t *iter, bool main)
 
     if(!main)
     {
-        Scope scope(this->lines, iter);
+        Scope obj_scope = Scope(lines, iter);
         size_t i = *iter;
 
         std::vector<std::string> obj_lines;
         
-        while (i < lines.size() && !scope.is_end_of_scope(i))
+        while (i < lines.size() && !obj_scope.is_end_of_scope(i))
         {
             obj_lines.push_back(lines[i]);
             i++;
@@ -104,6 +104,7 @@ void Object::parse()
             iter++;
             continue;
         }
+        else_statement(line, &iter);
         if_statement(line, &iter);
         parse_variables(words, line);
         check_instruction(line);

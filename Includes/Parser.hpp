@@ -16,6 +16,7 @@ const std::string FUNC_CALL = "call";
 
 
 const std::string IF = "if";
+const std::string ELSE = "else";
 const std::string WHILE = "while";
 
 // data types
@@ -64,6 +65,7 @@ class Object
         std::string value_check(std::string line ,size_t i);
 
         void if_statement(std::string line, size_t *i);
+        void else_statement(std::string line, size_t *i);
         void while_statement(std::string line, size_t *i);
         bool check_condition(std::string line);
 

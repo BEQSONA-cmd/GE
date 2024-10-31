@@ -1,42 +1,22 @@
 
-function hi_emanuel()
-{
+
+function aqeb(){
     string name = "Emanuel"
+    string status = "idiota"
+    name += " "
+    name += status
+    string test = "test: "
+
+    print("are you Emanuel")
     
-    string say_hi = "Hi, im "
-    say_hi += name
+    string answer = "yes"
 
-    int age = 20
-    if(age > 18)
-    {
-        string say_age = " and i am "
-        say_age += age
-        if(age == 20)
-        {
-            say_hi += say_age
-            print(say_hi)
-        }
+    if(answer == "yes"){
+        print(name)
+    }
+    else{
+        print("no")
     }
 }
 
-function main()
-{
-    print("this is program for testing types")
-
-    int i = 10
-    int j = -15
-
-    if(i > j)
-    {
-        i += j
-        if(i == -5)
-        {
-            print("i is -5")
-        }
-    }
-
-    hi_emanuel()
-
-}
-
-main()
+aqeb()

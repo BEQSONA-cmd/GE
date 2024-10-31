@@ -1,0 +1,47 @@
+
+function hi_emanuel(){
+    string name = "Emanuel"
+    
+    string say_hi = "Hi, im "
+    say_hi += name
+
+    int age = 20
+    if(age > 18)
+    {
+        string say_age = " and i am "
+        say_age += age
+        if(age == 20){
+            say_hi += say_age
+            print(say_hi)
+        }
+        else{
+            print("age is not 20")
+        }
+    }
+}
+
+function main()
+{
+    print("this is program for testing types")
+
+    int i = 10
+    int j = -15
+
+    if(i > j)
+    {
+        i += j
+        if(i == -5)
+        {
+            print("i is -5")
+        }
+        else
+        {
+            print("i is not -5")
+        }
+    }
+
+    hi_emanuel()
+
+}
+
+main()
