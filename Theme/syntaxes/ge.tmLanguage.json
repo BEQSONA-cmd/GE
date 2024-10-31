@@ -1,0 +1,35 @@
+{
+    "fileTypes": ["ge"],
+    "scopeName": "source.ge",
+    "patterns": [
+      {
+        "name": "keyword.control.ge",
+        "match": "\\b(function)\\b"
+      },
+      {
+        "name": "variable.ge",
+        "match": "\\b(int|string)\\b"
+      },
+      {
+        "name": "string.quoted.double.ge",
+        "begin": "\"",
+        "end": "\""
+      },
+      {
+        "name": "constant.numeric.ge",
+        "match": "\\b\\d+\\b"
+      },
+      {
+        "name": "variable.assignment.ge",
+        "match": "="
+      },
+      {
+        "name": "entity.name.function.ge",
+        "match": "\\b\\w+\\s*(?=\\()"
+      },
+      {
+        "name": "punctuation.bracket.ge",
+        "match": "[\\(\\)]"
+      }
+    ]
+}

@@ -34,6 +34,7 @@ std::vector<std::string> get_all_lines(char **av)
     return lines;
 }
 
+
 Object parsing(std::vector<std::string> lines, std::map<std::string, Object> &objects)
 {
     size_t i = 0;

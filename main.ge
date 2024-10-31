@@ -16,7 +16,7 @@ function func2()
     print("Hello World")
 }
 
-function func1()
+function main()
 {
 
     int i = 15
@@ -24,9 +24,8 @@ function func1()
     i += 7 
 
     print(i)
+    pr_something()
+    func2()
 }
 
-
-func1()
-func2()
-pr_something()
+main()

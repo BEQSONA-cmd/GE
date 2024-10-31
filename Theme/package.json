@@ -1,0 +1,29 @@
+{
+    "name": "my-ge-language",
+    "displayName": "GE Language Support",
+    "description": "Syntax highlighting for .ge files",
+    "version": "0.0.1",
+    "publisher": "your-name",
+    "engines": {
+      "vscode": "^1.50.0"
+    },
+    "categories": ["Programming Languages"],
+    "contributes": {
+      "languages": [
+        {
+          "id": "ge",
+          "aliases": ["GE", "ge"],
+          "extensions": [".ge"],
+          "configuration": "./language-configuration.json"
+        }
+      ],
+      "grammars": [
+        {
+          "language": "ge",
+          "scopeName": "source.ge",
+          "path": "./syntaxes/ge.tmLanguage.json"
+        }
+      ]
+    }
+  }
+  
