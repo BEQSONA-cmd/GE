@@ -47,7 +47,7 @@ void Object::add_int(std::string line)
         ft_error(line, 8);
     std::string key = get_previous_string(line, "+=");
 
-    int new_value = ft_atoi(variables->get(key)) + ft_atoi(value);
+    long long new_value = ft_atoi(variables->get(key)) + ft_atoi(value);
     variables->replace(key, std::to_string(new_value));
 }
 
@@ -60,7 +60,7 @@ void Object::sub_int(std::string line)
         ft_error(line, 8);
     std::string key = get_previous_string(line, "-=");
 
-    int new_value = ft_atoi(variables->get(key)) - ft_atoi(value);
+    long long new_value = ft_atoi(variables->get(key)) - ft_atoi(value);
     variables->replace(key, std::to_string(new_value));
 }
 

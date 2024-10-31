@@ -106,6 +106,7 @@ void Object::parse()
             iter++;
             continue;
         }
+        if_statement(line, &iter);
         parse_variables(words, line);
         check_instruction(line);
         iter++;

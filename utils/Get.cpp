@@ -13,6 +13,33 @@ bool ft_strchr(std::string str, char c)
     return false;
 }
 
+char get_next_char(std::string line, std::string str)
+{
+    size_t i = 0;
+    size_t j = 0;
+
+    bool save = false;
+
+    while(i < line.length())
+    {
+        while(line[i] == str[j] && j < line.length())
+        {
+            save = true;
+            j++;
+            i++;
+        }
+        if(save)
+        {
+            while(!is_char(line[i]) && i < line.length())
+                i++;
+            return(line[i]);
+        }
+        i++;
+    }
+    return '\0';
+
+}
+
 std::vector<std::string> get_all_string_space(std::string line)
 {
     std::vector<std::string> strings = {};

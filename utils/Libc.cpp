@@ -41,10 +41,10 @@ bool is_digit(char c)
     return false;
 }
 
-size_t ft_atoi(std::string str)
+long long ft_atoi(std::string str)
 {
     size_t i = 0;
-    size_t res = 0;
+    long long res = 0;
     bool is_negative = false;
 
     if (str[i] == '-')
@@ -64,7 +64,7 @@ size_t ft_atoi(std::string str)
     }
 
     if (is_negative)
-        return -res;
+        res = res * -1;
     return res;
 }
 

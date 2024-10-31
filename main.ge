@@ -1,31 +1,17 @@
 
-
-function pr_something()
-{
-    string something = "Hello World"
-
-    string add = " and hello friends"
-
-    something += add 
-
-    print(something)
-}
-
-function func2()
-{
-    print("Hello World")
-}
-
 function main()
 {
 
     int i = 15
-    
-    i += 7 
 
-    print(i)
-    pr_something()
-    func2()
+    int j = 20
+    
+    if(i < j)
+    {
+        print(i)
+        i += 1
+    }
+    
 }
 
 main()

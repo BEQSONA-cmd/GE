@@ -15,9 +15,8 @@ const std::string FUNC_INPUT = "input";
 const std::string FUNC_CALL = "call";
 
 
-const std::string FUNC_IF = "if";
-const std::string FUNC_WHILE = "while";
-const std::string FUNC_FUNCTION = "function";
+const std::string IF = "if";
+const std::string WHILE = "while";
 
 // data types
 const std::string STRING = "string";
@@ -54,6 +53,10 @@ class Object
         void parse_variables(std::vector<std::string> words, std::string line);
 
         std::string value_check(std::string line ,size_t i);
+
+        void if_statement(std::string line, size_t *i);
+        bool check_condition(std::string line);
+
         void check_instruction(std::string line);
         void print_instructions();
         Hash_Map *get_instructions();
@@ -77,6 +80,7 @@ std::string get_next_string(std::string line, std::string string);
 std::vector<std::string> get_all_string_space(std::string line);
 std::vector<std::string> get_all_string_func(std::string line);
 std::string get_first_string(std::string line);
+char get_next_char(std::string line, std::string str);
 
 
 bool is_str_in_str(std::string line, std::string string);
@@ -84,7 +88,6 @@ bool ft_strcmp(std::string str1, std::string str2);
 size_t string_count(std::string line);
 bool is_func_call(std::string line);
 bool is_two_qoute(std::string line);
-size_t ft_atoi(std::string str);
 bool is_char(char c);
 bool is_digit(char c);
 
