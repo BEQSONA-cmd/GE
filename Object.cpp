@@ -18,14 +18,12 @@ Object::Object(std::vector<std::string> lines, size_t *iter, bool main)
 
     if(!main)
     {
+        Scope scope(this->lines, iter);
         size_t i = *iter;
 
         std::vector<std::string> obj_lines;
-
-        if (lines[i] != "{")
-            i++;
-
-        while (i < lines.size() && get_first_string(lines[i]) != "}")
+        
+        while (i < lines.size() && !scope.is_end_of_scope(i))
         {
             obj_lines.push_back(lines[i]);
             i++;

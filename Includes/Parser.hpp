@@ -38,6 +38,15 @@ const std::string LESS = "<";
 const std::string GREATER_EQUAL = ">=";
 const std::string LESS_EQUAL = "<=";
 
+class Scope
+{
+    private:
+        size_t end;
+    public:
+        Scope(std::vector<std::string> lines, size_t *iter);
+        bool is_end_of_scope(size_t i);
+};
+
 // parser will parse the code and create a hash map
 class Object
 {
@@ -55,6 +64,7 @@ class Object
         std::string value_check(std::string line ,size_t i);
 
         void if_statement(std::string line, size_t *i);
+        void while_statement(std::string line, size_t *i);
         bool check_condition(std::string line);
 
         void check_instruction(std::string line);

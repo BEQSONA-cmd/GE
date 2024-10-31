@@ -7,10 +7,7 @@ bool is_char(char c)
     return false;
 }
 
-// it will trim the string and return the trimmed string
-// '   hello   ' -> 'hello'
-
-std::string ft_trim(std::string str)
+std::string ft_trim_func(std::string str)
 {
     size_t i = 0;
     std::string res = "";
@@ -21,16 +18,11 @@ std::string ft_trim(std::string str)
     while(i < str.length())
     {
         res += str[i];
+        if(str[i] == ')')
+            break;
         i++;
     }
-
-    i = res.length() - 1;
-    while(i > 0 && !is_char(res[i]))
-    {
-        res.pop_back();
-        i--;
-    }   
-
+    
     return res;
 }
 

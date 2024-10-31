@@ -15,7 +15,7 @@ bool is_char(char c);
 bool is_digit(char c);
 long long ft_atoi(std::string str);
 bool ft_strcmp(std::string str1, std::string str2);
-std::string ft_trim(std::string str);
+std::string ft_trim_func(std::string str);
 void free_hash_map(std::map<std::string, Object>& objects);
 
 #endif

@@ -50,10 +50,9 @@ Object parsing(std::vector<std::string> lines, std::map<std::string, Object> &ob
             i++;
             continue;
         }
-
         if (words[0] == FUNC && words.size() > 1)
         {
-            std::string key = ft_trim(words[1]);
+            std::string key = ft_trim_func(words[1]);
             Object object(lines, &i , false);
             objects[key] = object;
         }
@@ -85,6 +84,8 @@ int main(int ac, char** av)
     Excecuter executer(objects);
     executer.execute(main_object.get_instructions());
     free_hash_map(objects);
+    delete main_object.get_instructions();
+    delete main_object.get_variables();
 
     return 0;
 }
